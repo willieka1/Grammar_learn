@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Pro Tutor</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.3s ease-in-out;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 9999px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* 3D Flip Card */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .fade-in {
+            animation: fadeIn 0.25s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm transition-colors">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <button onclick="goHome()" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-brand-50 dark:bg-slate-700 text-brand-600 dark:text-brand-400 flex items-center justify-center hover:bg-brand-100 dark:hover:bg-slate-600 transition shadow-sm shrink-0" title="Beranda / Pilih Modul" aria-label="Beranda">
+                    <i class="fa-solid fa-house text-lg"></i>
+                </button>
+                <div class="min-w-0">
+                    <h1 id="app-title" class="font-extrabold text-base md:text-lg tracking-tight text-slate-900 dark:text-white truncate">English Grammar Pro</h1>
+                    <p id="app-subtitle" class="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">Pilih Modul Pembelajaran</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <div id="header-streak-badge" class="hidden sm:flex items-center gap-1.5 text-xs font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 px-3 py-1.5 rounded-xl border border-amber-200 dark:border-amber-800 shadow-sm">
+                    <i class="fa-solid fa-fire text-amber-500"></i>
+                    <span id="header-streak-count">1</span> Hari
+                </div>
+                <button onclick="toggleDarkMode()" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="Ganti Mode Gelap/Terang" aria-label="Ganti Tema">
+                    <i id="dark-icon" class="fa-solid fa-moon text-base"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto w-full px-4 py-6 flex-grow flex flex-col pb-20">
+
+        <!-- ================= VIEW 1: BOOK SELECTOR (BERANDA) ================= -->
+        <div id="view-home" class="space-y-6 fade-in">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-br from-brand-600 via-indigo-700 to-indigo-900 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl pointer-events-none">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="relative z-10 max-w-xl space-y-3">
+                    <span class="inline-block bg-white/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">Interactive Grammar Tutor</span>
+                    <h2 class="text-2xl md:text-3xl font-black tracking-tight leading-tight">Kuasai Grammar Bahasa Inggris Lebih Mudah & Terstruktur</h2>
+                    <p class="text-indigo-100 text-xs md:text-sm leading-relaxed">Pilih modul buku untuk mengakses penjelasan materi lengkap, latihan kuis adaptif, smart flashcards, dan pantau progres penguasaanmu secara personal.</p>
+                </div>
+            </div>
+
+            <!-- Modul Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Book 1 -->
+                <div onclick="selectBook(1)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-brand-500 dark:hover:border-brand-400 transition cursor-pointer flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold text-xs px-2.5 py-1 rounded-lg">📗 Buku 1</span>
+                            <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-brand-500 group-hover:translate-x-1 transition"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition">A Brief English Grammar</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Fondasi dasar bahasa Inggris: 4 pilar kalimat, parts of speech, tenses dasar, articles, prepositions, serta plurals.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs font-semibold text-brand-600 dark:text-brand-400">
+                        <span>6 Topik • 60 Soal • Cheat Sheet</span>
+                        <span class="group-hover:underline">Mulai Belajar →</span>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div onclick="selectBook(2)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-brand-500 dark:hover:border-brand-400 transition cursor-pointer flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 font-bold text-xs px-2.5 py-1 rounded-lg">📘 Buku 2</span>
+                            <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-brand-500 group-hover:translate-x-1 transition"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition">Understanding English Grammar</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Sintaksis tingkat lanjut: analisis frasa, pola kalimat SV/SVO/SVC/SVOC, ekspansi verba, kalimat pasif/cleft, dan modifiers.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs font-semibold text-brand-600 dark:text-brand-400">
+                        <span>7 Topik • 70 Soal • Analisis Mendalam</span>
+                        <span class="group-hover:underline">Mulai Belajar →</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode Gabungan Banner -->
+            <div onclick="openCombinedMode()" class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 text-white shadow-md border border-slate-800 hover:border-brand-500 transition cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="space-y-1">
+                    <span class="bg-indigo-500/30 text-indigo-300 text-xs font-bold px-2.5 py-1 rounded-md">🚀 Mode Komprehensif</span>
+                    <h3 class="font-bold text-lg">Belajar Gabungan & Ujian Campuran Kedua Buku</h3>
+                    <p class="text-slate-300 text-xs">Jelajahi seluruh topik dari kedua modul dan uji kemampuanmu melalui simulasi 20 soal campuran.</p>
+                </div>
+                <button class="bg-white text-slate-900 font-bold text-xs px-5 py-3 rounded-xl hover:bg-brand-50 transition shrink-0 min-h-[44px]">
+                    Buka Mode Gabungan
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 2: WORKSPACE (TABS) ================= -->
+        <div id="view-workspace" class="hidden flex-col space-y-6 fade-in flex-grow">
+            
+            <!-- Navigation Tabs Bar -->
+            <div class="flex overflow-x-auto gap-2 border-b border-slate-200 dark:border-slate-700 pb-2 no-scrollbar">
+                <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="min-h-[44px] px-4 py-2.5 text-xs font-bold rounded-xl transition whitespace-nowrap bg-brand-600 text-white shadow-sm flex items-center">
+                    <i class="fa-solid fa-chart-pie mr-2"></i> Dashboard
+                </button>
+                <button onclick="switchTab('latihan')" id="tab-btn-latihan" class="min-h-[44px] px-4 py-2.5 text-xs font-bold rounded-xl transition whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center">
+                    <i class="fa-solid fa-dumbbell mr-2"></i> Latihan Soal
+                </button>
+                <button onclick="switchTab('materi')" id="tab-btn-materi" class="min-h-[44px] px-4 py-2.5 text-xs font-bold rounded-xl transition whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center">
+                    <i class="fa-solid fa-book-open mr-2"></i> Materi Bacaan
+                </button>
+                <button onclick="switchTab('flashcard')" id="tab-btn-flashcard" class="min-h-[44px] px-4 py-2.5 text-xs font-bold rounded-xl transition whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center">
+                    <i class="fa-solid fa-layer-group mr-2"></i> Flashcard
+                </button>
+            </div>
+
+            <!-- ================= TAB 1: DASHBOARD ================= -->
+            <div id="tab-content-dashboard" class="space-y-6 fade-in">
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-3 gap-3 md:gap-4">
+                    <div class="bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center">
+                        <span class="text-xs text-slate-400 block mb-1">Streak Belajar</span>
+                        <span id="stat-streak" class="text-lg md:text-2xl font-black text-amber-500">1 Hari</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center">
+                        <span class="text-xs text-slate-400 block mb-1">Soal Dikerjakan</span>
+                        <span id="stat-total-done" class="text-lg md:text-2xl font-black text-slate-900 dark:text-white">0</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center">
+                        <span class="text-xs text-slate-400 block mb-1">Rata-rata Akurasi</span>
+                        <span id="stat-avg-accuracy" class="text-lg md:text-2xl font-black text-emerald-600 dark:text-emerald-400">0%</span>
+                    </div>
+                </div>
+
+                <!-- Weakest Topic Alert -->
+                <div id="weakest-topic-alert" class="hidden bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-2xl p-4 flex items-start gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-600 dark:text-amber-400 text-lg mt-0.5 shrink-0"></i>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-xs uppercase tracking-wide text-amber-800 dark:text-amber-300">Rekomendasi Perbaikan</h4>
+                        <p id="weakest-topic-text" class="text-xs text-amber-700 dark:text-amber-400 leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <!-- Progress Penguasaan Topik -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <h3 class="font-bold text-sm md:text-base text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-600 dark:text-brand-400"></i> Progres Penguasaan Topik
+                    </h3>
+                    <div id="topic-stats-container" class="space-y-3">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 2: LATIHAN SOAL ================= -->
+            <div id="tab-content-latihan" class="hidden space-y-6 fade-in flex-grow flex flex-col">
+                <!-- Topic Selection List -->
+                <div id="latihan-menu" class="space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div>
+                            <h3 class="font-bold text-base text-slate-900 dark:text-white">Pilih Topik Latihan</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Pilih salah satu materi di bawah atau jalankan ujian campuran acak.</p>
+                        </div>
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <span id="active-book-badge" class="text-xs font-bold px-2.5 py-1.5 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 shrink-0">📗 Buku 1</span>
+                            <button onclick="startMixedExam()" class="min-h-[44px] bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold px-4 py-2 rounded-xl shadow-sm hover:shadow transition text-xs whitespace-nowrap flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap"></i> Ujian Campuran (20 Soal)
+                            </button>
+                        </div>
+                    </div>
+                    <div id="topic-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Quiz Active Container -->
+                <div id="quiz-container" class="hidden space-y-4 bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm flex-grow flex flex-col justify-between">
+                    <div>
+                        <!-- Header Question & Quit -->
+                        <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-3 gap-2">
+                            <div>
+                                <span id="quiz-topic-title" class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider block">Topik</span>
+                                <h4 id="quiz-question-counter" class="font-extrabold text-sm text-slate-900 dark:text-white">Soal 1</h4>
+                            </div>
+                            <button onclick="quitQuiz()" class="min-h-[44px] text-xs font-semibold text-slate-400 hover:text-rose-600 transition flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700">
+                                <i class="fa-solid fa-xmark"></i> Keluar
+                            </button>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden my-4">
+                            <div id="quiz-progress-bar" class="bg-brand-600 h-full transition-all duration-300 rounded-full" style="width: 0%"></div>
+                        </div>
+
+                        <!-- Question Text -->
+                        <div class="py-2">
+                            <p id="quiz-question-text" class="text-base md:text-lg font-bold text-slate-900 dark:text-white leading-relaxed"></p>
+                        </div>
+
+                        <!-- MCQ Options -->
+                        <div id="quiz-options-container" class="space-y-2.5 my-4">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <!-- Text Input Options -->
+                        <div id="quiz-input-container" class="hidden space-y-3 my-4">
+                            <div>
+                                <input type="text" id="quiz-text-answer" oninput="clearTextError()" onkeydown="handleTextKey(event)" placeholder="Ketik jawabanmu di sini..." class="w-full px-4 py-3.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                <p id="quiz-input-error" class="text-xs text-rose-500 mt-1 hidden"></p>
+                            </div>
+                            <button onclick="submitTextAnswer()" class="w-full min-h-[44px] bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm shadow-sm flex items-center justify-center gap-2">
+                                Kirim Jawaban <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Feedback Box -->
+                        <div id="quiz-feedback-box" class="hidden rounded-2xl p-4 md:p-5 space-y-3 border my-4">
+                            <div id="quiz-feedback-header" class="font-bold text-sm flex items-center gap-2"></div>
+                            <p id="quiz-feedback-explanation" class="text-xs md:text-sm leading-relaxed text-slate-700 dark:text-slate-300"></p>
+                            <button onclick="nextQuestion()" class="w-full min-h-[44px] bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2">
+                                Lanjut ke Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Container -->
+                <div id="quiz-result-container" class="hidden space-y-5 bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm text-center max-w-lg mx-auto w-full my-auto">
+                    <div class="w-16 h-16 bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 text-3xl rounded-2xl flex items-center justify-center mx-auto shadow-inner">
+                        <i id="result-emoji" class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="font-black text-xl md:text-2xl text-slate-900 dark:text-white">Latihan Selesai!</h3>
+                        <p id="result-subtitle" class="text-xs text-slate-500 dark:text-slate-400">Kerja bagus! Evaluasi hasil belajarmu di bawah ini.</p>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 py-2">
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Skor Akhir</span>
+                            <span id="result-score" class="text-lg font-black text-brand-600 dark:text-brand-400">0%</span>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Benar</span>
+                            <span id="result-correct" class="text-lg font-black text-emerald-600 dark:text-emerald-400">0</span>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Salah</span>
+                            <span id="result-wrong" class="text-lg font-black text-rose-600 dark:text-rose-400">0</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <button onclick="retryWrongAnswers()" id="btn-retry-wrong" class="hidden flex-1 min-h-[44px] bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Ulangi Soal yang Salah
+                        </button>
+                        <button onclick="returnToLatihanMenu()" class="flex-1 min-h-[44px] bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2">
+                            Pilih Topik Lain
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 3: MATERI BACAAN ================= -->
+            <div id="tab-content-materi" class="hidden space-y-6 fade-in">
+                <!-- Book 1 Materi Container -->
+                <div id="materi-container-book1" class="space-y-6">
+                    <div class="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
+                        <button onclick="showMateriSection('sec-pilar1', this)" class="materi-tab-b1 min-h-[44px] bg-brand-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap shadow-sm">1. Dasar Kalimat</button>
+                        <button onclick="showMateriSection('sec-pilar2', this)" class="materi-tab-b1 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">2. Keluarga Subjek</button>
+                        <button onclick="showMateriSection('sec-pilar3', this)" class="materi-tab-b1 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">3. Keluarga Predikat</button>
+                        <button onclick="showMateriSection('sec-pilar4', this)" class="materi-tab-b1 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">4. Plural & Tenses</button>
+                        <button onclick="showMateriSection('sec-cheatsheet', this)" class="materi-tab-b1 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">5. Cheat Sheet</button>
+                    </div>
+
+                    <!-- B1 Section 1 -->
+                    <div id="sec-pilar1" class="materi-section-b1 space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">Pilar 1: Dasar Kalimat (The Sentence)</h4>
+                        <p>Kalimat adalah kumpulan kata yang menyampaikan satu pikiran utuh. Dalam bahasa Inggris, fondasi utama dari sebuah kalimat wajib memiliki <strong>Subject</strong> (Pelaku/Benda yang dibicarakan) dan <strong>Predicate</strong> (Tindakan atau kondisi yang dilakukan subjek).</p>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-2 border border-slate-100 dark:border-slate-700">
+                            <p class="font-bold text-xs uppercase text-slate-400">Pola Rumus:</p>
+                            <code class="block font-mono text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 p-2.5 rounded-xl text-xs md:text-sm">[Subject] + [Predicate (Verb / To Be)]</code>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-bold text-xs uppercase text-slate-400">Jenis-Jenis Kalimat:</p>
+                            <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300 text-xs md:text-sm">
+                                <li><strong>Declarative:</strong> Pernyataan fakta (<em>The sun rises in the east.</em>)</li>
+                                <li><strong>Interrogative:</strong> Kalimat tanya dengan auxiliary/to be (<em>Are you ready?</em>)</li>
+                                <li><strong>Imperative:</strong> Kalimat perintah langsung (<em>Open the door, please!</em>)</li>
+                                <li><strong>Exclamatory:</strong> Kalimat seruan emosi kuat (<em>What a wonderful day!</em>)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- B1 Section 2 -->
+                    <div id="sec-pilar2" class="materi-section-b1 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">Pilar 2: Keluarga Subjek (Nouns, Pronouns, Adjectives)</h4>
+                        <p>Subjek kalimat biasanya diisi oleh <strong>Noun</strong> (Kata Benda) atau <strong>Pronoun</strong> (Kata Ganti). Untuk memberikan detail atau menerangkan sifat benda, kita menggunakan <strong>Adjective</strong> (Kata Sifat).</p>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-2 border border-slate-100 dark:border-slate-700">
+                            <p class="font-bold text-xs uppercase text-slate-400">Aturan Penulisan Utama:</p>
+                            <code class="block font-mono text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 p-2.5 rounded-xl text-xs md:text-sm">[Adjective] + [Noun] (Kata sifat SELALU di depan kata benda)</code>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-bold text-xs uppercase text-slate-400">Contoh & Perbandingan:</p>
+                            <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300 text-xs md:text-sm">
+                                <li><em>Beautiful girl</em> (Bukan <em>girl beautiful</em>).</li>
+                                <li><em>He has a red car.</em></li>
+                                <li>Pronoun Subject: <em>I, You, They, We, He, She, It</em></li>
+                                <li>Pronoun Object: <em>Me, You, Them, Us, Him, Her, It</em></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- B1 Section 3 -->
+                    <div id="sec-pilar3" class="materi-section-b1 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">Pilar 3: Keluarga Predikat (Verbs, Adverbs, Objects)</h4>
+                        <p>Predikat adalah inti kalimat yang menunjukkan aksi atau keadaan (<strong>Verb</strong>). Kita menggunakan <strong>Adverb</strong> untuk menjelaskan bagaimana, kapan, atau di mana aksi dilakukan.</p>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-2 border border-slate-100 dark:border-slate-700">
+                            <p class="font-bold text-xs uppercase text-slate-400">Pola Rumus:</p>
+                            <code class="block font-mono text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 p-2.5 rounded-xl text-xs md:text-sm">[Subject] + [Verb] + [Object] + [Adverb]</code>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="font-bold text-xs uppercase text-slate-400">Contoh Kalimat:</p>
+                            <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300 text-xs md:text-sm">
+                                <li><em>She sings beautifully.</em> (Adverb of manner berakhiran -ly)</li>
+                                <li><em>They eat lunch in the cafeteria.</em> (Adverbial of place)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- B1 Section 4 -->
+                    <div id="sec-pilar4" class="materi-section-b1 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">Pilar 4: Perubahan Bentuk (Plurals & Tenses)</h4>
+                        <p>Bahasa Inggris menandai kuantitas (Singular vs Plural) serta kronologi waktu aksi (Tenses).</p>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-2 border border-slate-100 dark:border-slate-700">
+                            <p class="font-bold text-xs uppercase text-slate-400">Perubahan Bentuk Utama:</p>
+                            <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300 text-xs md:text-sm">
+                                <li><strong>Regular Plural:</strong> Penambahan <em>-s/-es</em> (<em>cat → cats, box → boxes</em>).</li>
+                                <li><strong>Irregular Plural:</strong> Perubahan vokal/akar kata (<em>child → children, man → men, foot → feet</em>).</li>
+                                <li><strong>Present Tense:</strong> Menggunakan V1 (atau V-s untuk <em>He/She/It</em>).</li>
+                                <li><strong>Past Tense:</strong> Menggunakan V2 (<em>walk → walked, go → went</em>).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- B1 Section 5: Cheat Sheet -->
+                    <div id="sec-cheatsheet" class="materi-section-b1 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
+                            <div>
+                                <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">📋 Cheat Sheet Grammar Esensial</h4>
+                                <p class="text-xs text-slate-500">Tabel ringkas aturan, rumus, dan contoh praktis.</p>
+                            </div>
+                            <button onclick="window.print()" class="min-h-[44px] bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-4 rounded-xl transition text-xs flex items-center gap-2 shadow-sm shrink-0">
+                                <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700">
+                            <table class="w-full text-left border-collapse min-w-[560px]">
+                                <thead>
+                                    <tr class="bg-brand-50 dark:bg-brand-900/30 text-brand-800 dark:text-brand-300 text-xs uppercase tracking-wider">
+                                        <th class="p-3.5 font-bold border-b border-slate-200 dark:border-slate-700">Topik</th>
+                                        <th class="p-3.5 font-bold border-b border-slate-200 dark:border-slate-700">Rumus / Pola</th>
+                                        <th class="p-3.5 font-bold border-b border-slate-200 dark:border-slate-700">Contoh Kalimat</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-xs md:text-sm bg-white dark:bg-slate-800 divide-y divide-slate-100 dark:divide-slate-700">
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Sentence Structure</td><td class="p-3.5 font-mono">S + V (+ O)</td><td class="p-3.5">The birds fly. / She reads a book.</td></tr>
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Parts of Speech</td><td class="p-3.5 font-mono">Adj + Noun</td><td class="p-3.5">He bought a fast computer.</td></tr>
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Present Simple</td><td class="p-3.5 font-mono">S + V1(-s/-es)</td><td class="p-3.5">Water boils at 100°C.</td></tr>
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Past Simple</td><td class="p-3.5 font-mono">S + V2</td><td class="p-3.5">We visited London last summer.</td></tr>
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Present Perfect</td><td class="p-3.5 font-mono">S + have/has + V3</td><td class="p-3.5">She has lived here for 5 years.</td></tr>
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Articles</td><td class="p-3.5 font-mono">a / an / the</td><td class="p-3.5">An hour, a university, the moon.</td></tr>
+                                    <tr><td class="p-3.5 font-bold text-brand-600 dark:text-brand-400">Prepositions</td><td class="p-3.5 font-mono">at / on / in</td><td class="p-3.5">At 8 AM, on Monday, in Jakarta.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 2 Materi Container -->
+                <div id="materi-container-book2" class="hidden space-y-6">
+                    <div class="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
+                        <button onclick="showMateriSectionB2('sec-b2-1', this)" class="materi-tab-b2 min-h-[44px] bg-brand-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap shadow-sm">1. Words & Phrases</button>
+                        <button onclick="showMateriSectionB2('sec-b2-2', this)" class="materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">2. Sentence Patterns</button>
+                        <button onclick="showMateriSectionB2('sec-b2-3', this)" class="materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">3. Expanding Verbs</button>
+                        <button onclick="showMateriSectionB2('sec-b2-4', this)" class="materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">4. Sentence Focus</button>
+                        <button onclick="showMateriSectionB2('sec-b2-5', this)" class="materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">5. Adverbials</button>
+                        <button onclick="showMateriSectionB2('sec-b2-6', this)" class="materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">6. Adjectivals</button>
+                        <button onclick="showMateriSectionB2('sec-b2-7', this)" class="materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap">7. Nominals</button>
+                    </div>
+
+                    <div id="sec-b2-1" class="materi-section-b2 space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">1. Words and Phrases</h4>
+                        <p>Dalam analisis sintaksis, kata-kata bergabung membentuk unit bermakna yang disebut <strong>Frasa (Phrase)</strong>. Frasa memiliki satu kata inti (<em>Headword</em>) yang dikelilingi oleh modifier/penjelas.</p>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-2xl space-y-2 border border-slate-100 dark:border-slate-700">
+                            <p class="font-bold text-xs uppercase text-slate-400">Contoh Struktur Frasa:</p>
+                            <p><strong>Noun Phrase:</strong> <em>[The tall glass] <u>building</u> [in downtown]</em> (Head: building)</p>
+                            <p><strong>Prepositional Phrase:</strong> <em>on the corner</em> (berfungsi sebagai modifier)</p>
+                        </div>
+                    </div>
+                    <div id="sec-b2-2" class="materi-section-b2 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">2. Sentence Patterns</h4>
+                        <p>Membedah 5 pola dasar pembentukan klausa utama dalam bahasa Inggris:</p>
+                        <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                            <li><strong>SV:</strong> <em>The baby sleeps.</em> (Intransitive)</li>
+                            <li><strong>SVO:</strong> <em>She plays piano.</em> (Monotransitive)</li>
+                            <li><strong>SVC:</strong> <em>He is a teacher.</em> (Linking verb + Subject Complement)</li>
+                            <li><strong>SVOO:</strong> <em>She gave me a gift.</em> (Ditransitive: Indirect + Direct Object)</li>
+                            <li><strong>SVOC:</strong> <em>The news made him happy.</em> (Object + Object Complement)</li>
+                        </ul>
+                    </div>
+                    <div id="sec-b2-3" class="materi-section-b2 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">3. Expanding the Main Verb</h4>
+                        <p>Verb phrase dapat diperluas menggunakan rangkaian auxiliary verbs (<em>have, be, do</em>) dan modal auxiliaries (<em>can, may, must, will</em>) untuk menyatakan waktu, aspek kontinyu, perfect, dan modalitas.</p>
+                    </div>
+                    <div id="sec-b2-4" class="materi-section-b2 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">4. Changing Sentence Focus</h4>
+                        <p>Penulis dapat menggeser fokus pesan melalui: <strong>Passive Voice</strong> (fokus pada penerima aksi), <strong>Cleft Sentences</strong> (<em>It was John who called</em>), serta <strong>There-transformation</strong>.</p>
+                    </div>
+                    <div id="sec-b2-5" class="materi-section-b2 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">5. Modifiers of the Verb (Adverbials)</h4>
+                        <p>Adverbial menjelaskan verba dalam hal cara (manner), tempat (place), waktu (time), alasan (reason), serta pengondisian (condition).</p>
+                    </div>
+                    <div id="sec-b2-6" class="materi-section-b2 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">6. Modifiers of the Noun (Adjectivals)</h4>
+                        <p>Adjectivals mencakup single adjectives, prepositional phrases sebagai penjelas noun, participial phrases, serta relative/adjective clauses (<em>The book which I bought</em>).</p>
+                    </div>
+                    <div id="sec-b2-7" class="materi-section-b2 hidden space-y-4 text-sm leading-relaxed bg-white dark:bg-slate-800 rounded-3xl p-5 md:p-7 border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <h4 class="font-bold text-base md:text-lg text-brand-600 dark:text-brand-400">7. Nominals, Modifiers & Coordination</h4>
+                        <p>Klausa dan frasa yang menempati slot posisi noun (gerunds, infinitives, that-clauses, interrogative clauses) serta koordinasi dengan konjungsi sejajar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 4: FLASHCARD ================= -->
+            <div id="tab-content-flashcard" class="hidden space-y-6 fade-in">
+                <!-- Flashcard Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white dark:bg-slate-800 rounded-2xl p-4 md:p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900 dark:text-white">Smart Flashcards</h3>
+                        <p id="fc-counter-info" class="text-xs text-slate-400">Kartu 1</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="filterFlashcards('all')" id="fc-filter-all" class="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition">Semua</button>
+                        <button onclick="filterFlashcards('book1')" id="fc-filter-b1" class="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">📗 Buku 1</button>
+                        <button onclick="filterFlashcards('book2')" id="fc-filter-b2" class="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">📘 Buku 2</button>
+                    </div>
+                </div>
+
+                <!-- 3D Card Area -->
+                <div id="flashcard-card-container" class="space-y-6 max-w-2xl mx-auto w-full">
+                    <div class="perspective-1000 w-full cursor-pointer select-none" onclick="flipCard()">
+                        <div id="flashcard-inner" class="relative w-full min-h-[17rem] md:min-h-[20rem] transition-transform duration-500 transform-style-3d shadow-md hover:shadow-lg rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                            <!-- Sisi Depan -->
+                            <div id="fc-front" class="absolute inset-0 w-full h-full bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col justify-between backface-hidden">
+                                <div class="flex justify-between items-center gap-2">
+                                    <span id="fc-topic-label" class="bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 text-xs font-bold px-3 py-1 rounded-full truncate">Topik</span>
+                                    <span class="text-xs text-slate-400 shrink-0"><i class="fa-solid fa-rotate mr-1"></i> Klik untuk membalik</span>
+                                </div>
+                                <div class="my-auto text-center py-4 px-2">
+                                    <h4 id="fc-question" class="text-base md:text-xl font-bold text-slate-900 dark:text-white leading-relaxed"></h4>
+                                </div>
+                                <div class="text-center text-xs text-slate-400 italic">Pertanyaan / Konsep</div>
+                            </div>
+                            <!-- Sisi Belakang -->
+                            <div id="fc-back" class="absolute inset-0 w-full h-full bg-indigo-900 text-white rounded-3xl p-6 md:p-8 flex flex-col justify-between backface-hidden rotate-y-180 overflow-y-auto">
+                                <div class="flex justify-between items-center gap-2">
+                                    <span class="bg-white/20 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full shrink-0">Kunci Jawaban</span>
+                                    <span class="text-xs text-indigo-300 shrink-0"><i class="fa-solid fa-rotate mr-1"></i> Klik untuk membalik</span>
+                                </div>
+                                <div class="my-auto py-4 space-y-2 text-center px-2">
+                                    <p id="fc-answer" class="text-lg md:text-xl font-bold text-emerald-300"></p>
+                                    <p id="fc-explanation" class="text-xs md:text-sm text-indigo-100 leading-relaxed max-w-md mx-auto"></p>
+                                </div>
+                                <div class="text-center text-xs text-indigo-300 italic">Sisi Belakang</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="markFlashcard(false)" class="min-h-[44px] bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-bold py-3 px-4 rounded-2xl transition text-xs flex items-center justify-center gap-2 border border-rose-200 dark:border-rose-900">
+                            <i class="fa-solid fa-circle-xmark"></i> Belum Hafal
+                        </button>
+                        <button onclick="markFlashcard(true)" class="min-h-[44px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-2xl transition text-xs flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-circle-check"></i> Sudah Hafal
+                        </button>
+                    </div>
+
+                    <!-- Nav Controls -->
+                    <div class="flex justify-between items-center pt-2">
+                        <button onclick="prevFlashcard()" id="fc-btn-prev" class="min-h-[44px] bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold py-2 px-4 rounded-xl text-xs transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrow-left"></i> Sebelum
+                        </button>
+                        <span id="fc-stats-badge" class="text-xs font-semibold text-slate-500">Hafal: 0 | Belum: 0</span>
+                        <button onclick="nextFlashcard()" id="fc-btn-next" class="min-h-[44px] bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold py-2 px-4 rounded-xl text-xs transition flex items-center gap-1.5">
+                            Lanjut <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Session Finished Screen -->
+                <div id="flashcard-result-container" class="hidden space-y-5 bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm text-center max-w-md mx-auto w-full">
+                    <div class="w-16 h-16 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 text-3xl rounded-2xl flex items-center justify-center mx-auto shadow-inner">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="font-black text-xl md:text-2xl text-slate-900 dark:text-white">Sesi Flashcard Selesai!</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Seluruh kartu dalam sesi ini telah selesai kamu tinjau.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 py-2">
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Sudah Hafal</span>
+                            <span id="fc-res-mastered" class="text-lg font-black text-emerald-600 dark:text-emerald-400">0</span>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Perlu Diulang</span>
+                            <span id="fc-res-review" class="text-lg font-black text-rose-600 dark:text-rose-400">0</span>
+                        </div>
+                    </div>
+                    <button onclick="restartFlashcards()" class="w-full min-h-[44px] bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Ulangi Sesi Flashcard
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Modal Combined Mode -->
+    <div id="modal-combined" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 shadow-2xl border border-slate-200 dark:border-slate-700">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-2.5 py-1 rounded-lg text-xs font-bold">🚀 Mode Komprehensif</span>
+                    <h3 class="font-bold text-base md:text-lg text-slate-900 dark:text-white">Belajar Gabungan</h3>
+                </div>
+                <button onclick="closeCombinedMode()" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-600 transition min-w-[40px] min-h-[40px]">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Pilih topik materi dari kedua buku untuk langsung membuka bahan bacaan atau jalankan Ujian Campuran 20 soal.</p>
+                
+                <div class="flex gap-2 pb-2 overflow-x-auto no-scrollbar">
+                    <button onclick="filterCombinedTopics('all')" id="cmb-filter-all" class="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition">Semua Topik</button>
+                    <button onclick="filterCombinedTopics('book1')" id="cmb-filter-b1" class="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">Buku 1 (📗)</button>
+                    <button onclick="filterCombinedTopics('book2')" id="cmb-filter-b2" class="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">Buku 2 (📘)</button>
+                </div>
+
+                <div id="combined-topics-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
+                    <!-- Dynamic topics injected -->
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <button onclick="startMixedExam()" class="w-full min-h-[44px] bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 px-4 rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-shuffle"></i> Mulai Ujian Campuran (20 Soal)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        /* ========================================================
+           1. TOPICS & QUESTION BANKS (BOOK 1 & BOOK 2)
+        ======================================================== */
+        const topicsList1 = [
+            { id: 'b1_t1', name: 'Sentence Structure', icon: 'fa-cubes', color: 'text-blue-500', book: 1, desc: 'Fondasi kalimat, subjek, predikat, & jenis kalimat.' },
+            { id: 'b1_t2', name: 'Parts of Speech', icon: 'fa-puzzle-piece', color: 'text-purple-500', book: 1, desc: 'Noun, Pronoun, Adjective, & Adverb.' },
+            { id: 'b1_t3', name: 'Tenses', icon: 'fa-clock', color: 'text-emerald-500', book: 1, desc: 'Present, Past, & Future Tenses.' },
+            { id: 'b1_t4', name: 'Articles', icon: 'fa-tag', color: 'text-amber-500', book: 1, desc: 'Penggunaan a, an, dan the yang tepat.' },
+            { id: 'b1_t5', name: 'Prepositions', icon: 'fa-location-dot', color: 'text-rose-500', book: 1, desc: 'Preposisi tempat dan waktu (in, on, at).' },
+            { id: 'b1_t6', name: 'Pronouns & Plurals', icon: 'fa-users', color: 'text-cyan-500', book: 1, desc: 'Kata ganti dan aturan jamak teratur/tidak teratur.' }
+        ];
+
+        const topicsList2 = [
+            { id: 'b2_t1', name: 'Words and Phrases', icon: 'fa-tags', color: 'text-indigo-500', book: 2, desc: 'Frasa nominal, verbal, preposisi, & intensifiers.' },
+            { id: 'b2_t2', name: 'Sentence Patterns', icon: 'fa-sitemap', color: 'text-blue-500', book: 2, desc: 'Pola sintaksis: SV, SVO, SVC, SVOO, SVOC.' },
+            { id: 'b2_t3', name: 'Expanding the Main Verb', icon: 'fa-expand', color: 'text-teal-500', book: 2, desc: 'Auxiliaries, modals, perfect, dan progressive.' },
+            { id: 'b2_t4', name: 'Changing Sentence Focus', icon: 'fa-bullseye', color: 'text-rose-500', book: 2, desc: 'Active vs Passive Voice & Cleft sentences.' },
+            { id: 'b2_t5', name: 'Modifiers of the Verb (Adverbials)', icon: 'fa-running', color: 'text-amber-500', book: 2, desc: 'Keterangan cara, tempat, waktu, & frekuensi.' },
+            { id: 'b2_t6', name: 'Modifiers of the Noun (Adjectivals)', icon: 'fa-shapes', color: 'text-emerald-500', book: 2, desc: 'Prepositional & relative clauses sebagai modifiers.' },
+            { id: 'b2_t7', name: 'Nominals & Coordination', icon: 'fa-link', color: 'text-purple-500', book: 2, desc: 'Klausa nominal, gerunds, infinitives, & koordinasi.' }
+        ];
+
+        // Bank Soal Lengkap Buku 1 (60 Soal)
+        const bankSoalBook1 = [
+            // Topic 1: Sentence Structure
+            { id: 'q101', topicId: 'b1_t1', book: 1, type: 'mc', question: "Manakah unsur minimal yang wajib ada agar sebuah kalimat bahasa Inggris dapat disebut utuh?", options: ["Subject & Predicate", "Adjective & Adverb", "Article & Noun", "Conjunction & Verb"], answer: 0, explanation: "Kalimat minimal membutuhkan subjek (pelaku) dan predikat (tindakan/kondisi)." },
+            { id: 'q102', topicId: 'b1_t1', book: 1, type: 'mc', question: "Kalimat yang berfungsi untuk mengajukan pertanyaan disebut kalimat:", options: ["Declarative", "Interrogative", "Imperative", "Exclamatory"], answer: 1, explanation: "Interrogative adalah jenis kalimat tanya." },
+            { id: 'q103', topicId: 'b1_t1', book: 1, type: 'mc', question: "Manakah yang merupakan contoh kalimat perintah (Imperative)?", options: ["The sun shines brightly.", "Open the door, please!", "Where are you going?", "She reads quietly."], answer: 1, explanation: "Imperative meminta orang melakukan suatu tindakan secara langsung." },
+            { id: 'q104', topicId: 'b1_t1', book: 1, type: 'mc', question: "Dalam struktur 'Birds fly', kata 'fly' bertindak sebagai:", options: ["Subject", "Predicate / Verb", "Object", "Adverb"], answer: 1, explanation: "'Fly' adalah kata kerja predikat yang menyatakan aksi burung." },
+            { id: 'q105', topicId: 'b1_t1', book: 1, type: 'mc', question: "Apa kesalahan utama pada kalimat 'She happy today'?", options: ["Kurang kata kerja bantu (To Be / is)", "Salah penggunaan subjek", "Kurang tanda tanya", "Salah tenses"], answer: 0, explanation: "Kalimat nominal memerlukan verb/to be 'is' menjadi 'She is happy today'." },
+            { id: 'q106', topicId: 'b1_t1', book: 1, type: 'text', question: "Lengkapi kalimat dasar berikut: The baby ____. (Menangis)", answer: "cries", explanation: "Subjek tunggal 'The baby' menggunakan verb bentuk -s (cries)." },
+            { id: 'q107', topicId: 'b1_t1', book: 1, type: 'text', question: "Tuliskan jenis kalimat dari: 'What a beautiful day!' (Ketik nama tipenya)", answer: "exclamatory", explanation: "Kalimat seruan (exclamatory) mengekspresikan emosi kuat." },
+            { id: 'q108', topicId: 'b1_t1', book: 1, type: 'text', question: "Sebutkan subjek kalimat dari: 'Children play football.' Subjeknya adalah ____.", answer: "children", explanation: "Subjek kalimat adalah 'children'." },
+            { id: 'q109', topicId: 'b1_t1', book: 1, type: 'text', question: "Koreksi to be pada: 'They is playing football.' Ganti 'is' dengan ____.", answer: "are", explanation: "Subjek jamak 'They' harus menggunakan to be 'are'." },
+            { id: 'q110', topicId: 'b1_t1', book: 1, type: 'text', question: "Ubah bentuk verb 'run' untuk subjek 'He' pada Simple Present: He ____ fast.", answer: "runs", explanation: "Subjek tunggal orang ketiga 'He' memerlukan akhiran -s (runs)." },
+
+            // Topic 2: Parts of Speech
+            { id: 'q201', topicId: 'b1_t2', book: 1, type: 'mc', question: "Kata yang berfungsi menamai orang, tempat, atau benda disebut:", options: ["Noun", "Verb", "Adjective", "Adverb"], answer: 0, explanation: "Noun adalah kata benda." },
+            { id: 'q202', topicId: 'b1_t2', book: 1, type: 'mc', question: "Manakah yang merupakan kata sifat (Adjective)?", options: ["Quickly", "Beautiful", "Table", "Sing"], answer: 1, explanation: "'Beautiful' adalah kata sifat untuk mendeskripsikan benda." },
+            { id: 'q203', topicId: 'b1_t2', book: 1, type: 'mc', question: "Kata ganti (Pronoun) yang tepat untuk menggantikan subjek laki-laki tunggal adalah:", options: ["He", "She", "It", "They"], answer: 0, explanation: "'He' digunakan untuk laki-laki tunggal." },
+            { id: 'q204', topicId: 'b1_t2', book: 1, type: 'mc', question: "Di mana posisi baku sebuah Adjective dalam frasa benda bahasa Inggris?", options: ["Sebelum Noun", "Sesudah Noun", "Di akhir kalimat", "Bebas"], answer: 0, explanation: "Adjective mendahului noun yang diterangkannya (misal: red car)." },
+            { id: 'q205', topicId: 'b1_t2', book: 1, type: 'mc', question: "Kata 'quickly' dalam kalimat 'He runs quickly' adalah:", options: ["Adjective", "Adverb", "Noun", "Preposition"], answer: 1, explanation: "Adverb menjelaskan bagaimana tindakan 'run' dilakukan." },
+            { id: 'q206', topicId: 'b1_t2', book: 1, type: 'text', question: "Kata sifat untuk 'merah' adalah: She has a ____ car.", answer: "red", explanation: "'red' adalah adjective penjelas warna." },
+            { id: 'q207', topicId: 'b1_t2', book: 1, type: 'text', question: "Kata ganti objek untuk 'I' adalah ____.", answer: "me", explanation: "Bentuk objek dari I adalah me." },
+            { id: 'q208', topicId: 'b1_t2', book: 1, type: 'text', question: "Ubah kata sifat 'smart' menjadi adverb dengan akhiran -ly: ____.", answer: "smartly", explanation: "Adverb dari smart adalah smartly." },
+            { id: 'q209', topicId: 'b1_t2', book: 1, type: 'text', question: "Urutkan kata: 'car red' yang benar adalah ____ car.", answer: "red", explanation: "Adjective harus mendahului noun." },
+            { id: 'q210', topicId: 'b1_t2', book: 1, type: 'text', question: "Lengkapi dengan pronoun objek: I give it to ____. (he)", answer: "him", explanation: "Setelah preposisi 'to', gunakan bentuk objek 'him'." },
+
+            // Topic 3: Tenses
+            { id: 'q301', topicId: 'b1_t3', book: 1, type: 'mc', question: "Tense apa yang digunakan untuk menyatakan rutinitas atau kebenaran umum?", options: ["Simple Present Tense", "Simple Past Tense", "Present Future Tense", "Past Continuous"], answer: 0, explanation: "Simple Present menyatakan fakta ilmiah atau kebiasaan sehari-hari." },
+            { id: 'q302', topicId: 'b1_t3', book: 1, type: 'mc', question: "Bentuk ke-2 (Past) dari kata kerja irregular 'go' adalah:", options: ["goed", "went", "gone", "goes"], answer: 1, explanation: "'went' adalah V2 dari kata kerja go." },
+            { id: 'q303', topicId: 'b1_t3', book: 1, type: 'mc', question: "Kalimat mana yang menunjukkan kejadian di masa lalu (Past Tense)?", options: ["I eat breakfast now.", "I ate breakfast yesterday.", "I will eat breakfast.", "I am eating breakfast."], answer: 1, explanation: "Keterangan 'yesterday' dan V2 'ate' menandakan Simple Past." },
+            { id: 'q304', topicId: 'b1_t3', book: 1, type: 'mc', question: "Rumus baku Present Perfect Tense adalah:", options: ["Subject + V2", "Subject + have/has + V3", "Subject + will + V1", "Subject + is/am/are + V-ing"], answer: 1, explanation: "Present Perfect memakai have/has + V3." },
+            { id: 'q305', topicId: 'b1_t3', book: 1, type: 'mc', question: "Manakah kalimat yang menggunakan Future Tense?", options: ["She will come tomorrow.", "She comes yesterday.", "She is coming now.", "She came last night."], answer: 0, explanation: "Auxiliary 'will' digunakan untuk kejadian masa depan." },
+            { id: 'q306', topicId: 'b1_t3', book: 1, type: 'text', question: "Bentuk V2 dari 'play' adalah: Yesterday I ____ football.", answer: "played", explanation: "Regular verb 'play' berakhiran -ed (played)." },
+            { id: 'q307', topicId: 'b1_t3', book: 1, type: 'text', question: "Pilih have/has untuk subjek 'She': She ____ finished.", answer: "has", explanation: "Subjek tunggal orang ketiga menggunakan 'has'." },
+            { id: 'q308', topicId: 'b1_t3', book: 1, type: 'text', question: "Bentuk V1 dari kata kerja 'written' adalah ____.", answer: "write", explanation: "V1: write, V2: wrote, V3: written." },
+            { id: 'q309', topicId: 'b1_t3', book: 1, type: 'text', question: "Ganti kata kerja 'go' ke Past Tense: He ____ to school yesterday.", answer: "went", explanation: "Bentuk lampau dari go adalah went." },
+            { id: 'q310', topicId: 'b1_t3', book: 1, type: 'text', question: "Ganti 'ate' ke V3 setelah have: I have ____ my dinner.", answer: "eaten", explanation: "Bentuk V3 dari eat adalah eaten." },
+
+            // Topic 4: Articles
+            { id: 'q401', topicId: 'b1_t4', book: 1, type: 'mc', question: "Article yang digunakan di depan kata benda tunggal berbunyi vokal adalah:", options: ["a", "an", "the", "some"], answer: 1, explanation: "'an' digunakan sebelum bunyi vokal (a, i, u, e, o)." },
+            { id: 'q402', topicId: 'b1_t4', book: 1, type: 'mc', question: "Kapan kita menggunakan definite article 'the'?", options: ["Untuk benda yang acak/umum", "Untuk benda yang sudah spesifik/diketahui bersama", "Hanya untuk nama orang", "Tidak pernah digunakan"], answer: 1, explanation: "'the' merujuk benda spesifik yang sudah diketahui pembicara & pendengar." },
+            { id: 'q403', topicId: 'b1_t4', book: 1, type: 'mc', question: "Manakah penggunaan article yang benar?", options: ["a apple", "an book", "a book", "an car"], answer: 2, explanation: "'book' diawali bunyi konsonan /b/, jadi menggunakan 'a'." },
+            { id: 'q404', topicId: 'b1_t4', book: 1, type: 'mc', question: "Pilih kalimat yang benar:", options: ["I saw a sun in the sky.", "I saw the sun in the sky.", "I saw an sun in the sky.", "I saw sun in sky."], answer: 1, explanation: "Matahari unik dan hanya ada satu, wajib memakai 'the'." },
+            { id: 'q405', topicId: 'b1_t4', book: 1, type: 'mc', question: "Kata 'hour' diawali huruf konsonan h, namun menggunakan article:", options: ["a", "an", "the", "tidak perlu"], answer: 1, explanation: "Huruf h pada hour tidak dilafalkan (silent), dibaca /aʊər/ berbunyi vokal." },
+            { id: 'q406', topicId: 'b1_t4', book: 1, type: 'text', question: "Lengkapi article: She is eating ____ apple.", answer: "an", explanation: "Apple diawali bunyi vokal." },
+            { id: 'q407', topicId: 'b1_t4', book: 1, type: 'text', question: "Lengkapi article: I bought ____ new car. (Sebuah)", answer: "a", explanation: "Benda tunggal umum konsonan menggunakan 'a'." },
+            { id: 'q408', topicId: 'b1_t4', book: 1, type: 'text', question: "Lengkapi article spesifik: ____ moon is bright tonight.", answer: "the", explanation: "Bulan bersifat unik dan spesifik." },
+            { id: 'q409', topicId: 'b1_t4', book: 1, type: 'text', question: "Article yang tepat untuk 'university' adalah: ____ university. (a/an)", answer: "a", explanation: "Kata university berbunyi konsonan /juː/." },
+            { id: 'q410', topicId: 'b1_t4', book: 1, type: 'text', question: "Article yang tepat untuk 'honest man' adalah: He is ____ honest man. (a/an)", answer: "an", explanation: "Huruf h silent, bunyi awal adalah vokal." },
+
+            // Topic 5: Prepositions
+            { id: 'q501', topicId: 'b1_t5', book: 1, type: 'mc', question: "Preposisi untuk menunjukkan posisi di dalam ruangan adalah:", options: ["in", "on", "at", "by"], answer: 0, explanation: "'in' untuk ruang tertutup atau volume di dalam." },
+            { id: 'q502', topicId: 'b1_t5', book: 1, type: 'mc', question: "Preposisi untuk menyatakan hari (misal: Senin) adalah:", options: ["in", "on", "at", "from"], answer: 1, explanation: "'on' digunakan untuk hari dan tanggal." },
+            { id: 'q503', topicId: 'b1_t5', book: 1, type: 'mc', question: "Preposisi untuk menunjukkan jam/waktu spesifik adalah:", options: ["in", "on", "at", "under"], answer: 2, explanation: "'at' digunakan untuk waktu spesifik pada jam." },
+            { id: 'q504', topicId: 'b1_t5', book: 1, type: 'mc', question: "Manakah kalimat yang benar menggunakan preposisi tempat?", options: ["The book is on the table.", "The book is in the table.", "The book is at the table.", "The book is under surface."], answer: 0, explanation: "Buku berada di atas permukaan meja, menggunakan 'on'." },
+            { id: 'q505', topicId: 'b1_t5', book: 1, type: 'mc', question: "Terjemahan dari 'di bawah tempat tidur' adalah:", options: ["on the bed", "under the bed", "in the bed", "at the bed"], answer: 1, explanation: "'under' berarti di bawah." },
+            { id: 'q506', topicId: 'b1_t5', book: 1, type: 'text', question: "Lengkapi preposisi tahun: I was born ____ 1998.", answer: "in", explanation: "Tahun dan bulan menggunakan preposisi 'in'." },
+            { id: 'q507', topicId: 'b1_t5', book: 1, type: 'text', question: "Lengkapi preposisi hari: See you ____ Monday!", answer: "on", explanation: "Nama hari menggunakan preposisi 'on'." },
+            { id: 'q508', topicId: 'b1_t5', book: 1, type: 'text', question: "Lengkapi preposisi jam: The meeting starts ____ 9 AM.", answer: "at", explanation: "Jam spesifik menggunakan preposisi 'at'." },
+            { id: 'q509', topicId: 'b1_t5', book: 1, type: 'text', question: "Preposisi tempat kota/negara: She lives ____ Jakarta.", answer: "in", explanation: "Nama kota dan negara menggunakan preposisi 'in'." },
+            { id: 'q510', topicId: 'b1_t5', book: 1, type: 'text', question: "Titik lokasi bangunan: We arrived ____ the station.", answer: "at", explanation: "Lokasi titik tujuan menggunakan preposisi 'at'." },
+
+            // Topic 6: Pronouns & Plurals
+            { id: 'q601', topicId: 'b1_t6', book: 1, type: 'mc', question: "Bentuk jamak (plural) dari kata benda 'cat' adalah:", options: ["cats", "cates", "catz", "cat"], answer: 0, explanation: "Mayoritas benda jamak berakhiran -s." },
+            { id: 'q602', topicId: 'b1_t6', book: 1, type: 'mc', question: "Bentuk jamak dari kata benda 'box' adalah:", options: ["boxs", "boxes", "boxies", "boxen"], answer: 1, explanation: "Kata berakhiran -x ditambah -es." },
+            { id: 'q603', topicId: 'b1_t6', book: 1, type: 'mc', question: "Bentuk jamak tidak beraturan (irregular) dari 'child' adalah:", options: ["childs", "children", "childes", "childrens"], answer: 1, explanation: "Bentuk jamak irregular child adalah children." },
+            { id: 'q604', topicId: 'b1_t6', book: 1, type: 'mc', question: "Possessive pronoun (kepemilikan) untuk subjek 'You' adalah:", options: ["your", "yours", "you", "yourself"], answer: 0, explanation: "'your' adalah possessive determiner (your book)." },
+            { id: 'q605', topicId: 'b1_t6', book: 1, type: 'mc', question: "Bentuk jamak dari 'man' adalah:", options: ["mans", "men", "menes", "manz"], answer: 1, explanation: "Man berubah menjadi men." },
+            { id: 'q606', topicId: 'b1_t6', book: 1, type: 'text', question: "Bentuk plural dari 'book' adalah ____.", answer: "books", explanation: "Book ditambah -s menjadi books." },
+            { id: 'q607', topicId: 'b1_t6', book: 1, type: 'text', question: "Bentuk plural dari 'baby' adalah ____.", answer: "babies", explanation: "Akhiran -y didahului konsonan berubah jadi -ies." },
+            { id: 'q608', topicId: 'b1_t6', book: 1, type: 'text', question: "Bentuk plural irregular dari 'foot' adalah ____.", answer: "feet", explanation: "Foot menjadi feet." },
+            { id: 'q609', topicId: 'b1_t6', book: 1, type: 'text', question: "Ganti childs dengan kata yang benar: Three ____ are playing.", answer: "children", explanation: "Bentuk jamak child adalah children." },
+            { id: 'q610', topicId: 'b1_t6', book: 1, type: 'text', question: "Possessive bersama (kami): This is ____ house.", answer: "our", explanation: "Our menyatakan kepemilikan kami/kita." }
+        ];
+
+        // Bank Soal Lengkap Buku 2 (70 Soal)
+        const bankSoalBook2 = [
+            // Topic 1: Words and Phrases (b2_t1)
+            { id: 'u101', topicId: 'b2_t1', book: 2, type: 'mc', question: "Manakah kelompok kata yang membentuk sebuah noun phrase (frasa nominal) utuh?", options: ["run quickly down the street", "the tall glass building in downtown", "because he arrived late at night", "has been working for hours"], answer: 1, explanation: "Frasa nominal berpusat pada kata benda (building) didahului determiner dan modifiers." },
+            { id: 'u102', topicId: 'b2_t1', book: 2, type: 'mc', question: "Dalam sintaksis, apa fungsi utama dari Prepositional Phrase?", options: ["Mutlak sebagai subjek kalimat", "Sebagai modifier penjelas bagi noun atau verb", "Sebagai kata kerja bantu utama", "Sebagai konjungsi koordinasi"], answer: 1, explanation: "Prepositional phrase bertindak sebagai adjectival (penjelas noun) atau adverbial (penjelas verb)." },
+            { id: 'u103', topicId: 'b2_t1', book: 2, type: 'mc', question: "Manakah yang diklasifikasikan sebagai Verb Phrase utuh?", options: ["has been studying for hours", "very delicious homemade food", "on the corner of the street", "the girl next to me"], answer: 0, explanation: "Verb phrase terdiri dari auxiliary verbs dan main verb." },
+            { id: 'u104', topicId: 'b2_t1', book: 2, type: 'mc', question: "Kata 'extremely' dalam frasa 'an extremely complex problem' bertindak sebagai:", options: ["Headword", "Intensifier penjelas adjective", "Conjunction", "Noun adjunct"], answer: 1, explanation: "'extremely' memperkuat makna kata sifat 'complex'." },
+            { id: 'u105', topicId: 'b2_t1', book: 2, type: 'mc', question: "Urutan multiple adjectives yang baku sebelum noun adalah:", options: ["Color, Opinion, Material", "Opinion, Color, Material", "Material, Opinion, Color", "Color, Material, Opinion"], answer: 1, explanation: "Urutan sifat: Opinion -> Size -> Age -> Shape -> Color -> Material." },
+            { id: 'u106', topicId: 'b2_t1', book: 2, type: 'text', question: "Lengkapi adverb phrase untuk 'sangat hati-hati': He drove ____.", answer: "very carefully", explanation: "'very carefully' adalah adverb phrase." },
+            { id: 'u107', topicId: 'b2_t1', book: 2, type: 'text', question: "Lengkapi preposisi tempat: The cat ____ the table is sleeping. (di bawah)", answer: "under", explanation: "Preposisi 'under' memimpin prepositional phrase penjelas posisi." },
+            { id: 'u108', topicId: 'b2_t1', book: 2, type: 'text', question: "Urutkan kata sifat (cantik, merah, sutra): a ____ dress.", answer: "beautiful red silk", explanation: "Urutan: Opinion (beautiful) -> Color (red) -> Material (silk)." },
+            { id: 'u109', topicId: 'b2_t1', book: 2, type: 'text', question: "Perbaiki article pada: 'a extremely big house' menjadi ____ extremely big house.", answer: "an", explanation: "Kata 'extremely' diawali bunyi vokal /ɪ/." },
+            { id: 'u110', topicId: 'b2_t1', book: 2, type: 'text', question: "Koreksi 'book of mine' menjadi possessive determiner: ____ book.", answer: "my", explanation: "Possessive determiner 'my' ditempatkan langsung di depan noun." },
+
+            // Topic 2: Sentence Patterns (b2_t2)
+            { id: 'u201', topicId: 'b2_t2', book: 2, type: 'mc', question: "Pola dasar kalimat 'The baby sleeps' adalah:", options: ["SV", "SVO", "SVC", "SVOO"], answer: 0, explanation: "Subject + Verb intransitive tanpa objek." },
+            { id: 'u202', topicId: 'b2_t2', book: 2, type: 'mc', question: "Kalimat 'She is a talented doctor' memiliki pola sintaksis:", options: ["SVO", "SVC", "SV", "SVOC"], answer: 1, explanation: "SVC: Subject + Linking verb + Subject Complement (noun)." },
+            { id: 'u203', topicId: 'b2_t2', book: 2, type: 'mc', question: "Kalimat 'My father gave me a new watch' berakar dari pola:", options: ["SVO", "SVOO", "SVOC", "SVC"], answer: 1, explanation: "SVOO: Ditransitive verb dengan Indirect Object (me) dan Direct Object (a new watch)." },
+            { id: 'u204', topicId: 'b2_t2', book: 2, type: 'mc', question: "Dalam 'The committee appointed him chairman', kata 'chairman' berfungsi sebagai:", options: ["Direct Object", "Indirect Object", "Object Complement", "Subject Complement"], answer: 2, explanation: "'chairman' menerangkan objek 'him', sehingga menjadi Object Complement." },
+            { id: 'u205', topicId: 'b2_t2', book: 2, type: 'mc', question: "Manakah kalimat yang menggunakan pola SVOC?", options: ["The teacher explains the lesson clearly.", "They elected Alice president.", "He looks tired today.", "Birds fly in the sky."], answer: 1, explanation: "They (S) elected (V) Alice (O) president (C)." },
+            { id: 'u206', topicId: 'b2_t2', book: 2, type: 'text', question: "Tuliskan singkatan pola 3 huruf untuk: 'I love English' (S...)", answer: "SVO", explanation: "Subject + Verb + Object." },
+            { id: 'u207', topicId: 'b2_t2', book: 2, type: 'text', question: "Tuliskan singkatan pola 3 huruf untuk: 'He is happy' (S...)", answer: "SVC", explanation: "Subject + Verb + Subject Complement (adjective)." },
+            { id: 'u208', topicId: 'b2_t2', book: 2, type: 'text', question: "Tuliskan singkatan pola 2 huruf untuk: 'The rain stopped' (S...)", answer: "SV", explanation: "Subject + Verb intransitive." },
+            { id: 'u209', topicId: 'b2_t2', book: 2, type: 'text', question: "Perbaiki susunan kata: 'He made happy me' menjadi 'He made me ____'.", answer: "happy", explanation: "Dalam pola SVOC, Object mendahului Complement." },
+            { id: 'u210', topicId: 'b2_t2', book: 2, type: 'text', question: "Identifikasi Indirect Object dari: 'She sent John a letter'. Objeknya adalah ____.", answer: "John", explanation: "John adalah penerima (Indirect Object)." },
+
+            // Topic 3: Expanding the Main Verb (b2_t3)
+            { id: 'u301', topicId: 'b2_t3', book: 2, type: 'mc', question: "Bentuk ekspansi verb 'has been working' menunjukkan aspek:", options: ["Simple Present", "Present Perfect Continuous", "Past Perfect", "Future Continuous"], answer: 1, explanation: "have/has + been + V-ing menandakan Present Perfect Continuous." },
+            { id: 'u302', topicId: 'b2_t3', book: 2, type: 'mc', question: "Modal auxiliary apa yang menyatakan kewajiban mutlak (obligation)?", options: ["might", "must", "could", "may"], answer: 1, explanation: "'must' menyatakan kewajiban atau keharusan mutlak." },
+            { id: 'u303', topicId: 'b2_t3', book: 2, type: 'mc', question: "Setelah modal auxiliary (can, will, should), bentuk verb yang wajib dipakai adalah:", options: ["Bare Infinitive (V1)", "V-ing", "V2", "To Infinitive"], answer: 0, explanation: "Modal selalu diikuti bare infinitive (kata kerja dasar tanpa to)." },
+            { id: 'u304', topicId: 'b2_t3', book: 2, type: 'mc', question: "Manakah auxiliary verb yang digunakan untuk membentuk aspek Progressive/Continuous?", options: ["be (is/am/are/was/were)", "have/has", "do/does", "will"], answer: 0, explanation: "Aspek progresif memakai varian 'be' diikuti participle -ing." },
+            { id: 'u305', topicId: 'b2_t3', book: 2, type: 'mc', question: "Bentuk lampau dari modal 'can' adalah:", options: ["canned", "could", "would", "should"], answer: 1, explanation: "'could' adalah bentuk past dari can." },
+            { id: 'u306', topicId: 'b2_t3', book: 2, type: 'text', question: "Lengkapi bare infinitive setelah should: You should ____ (study) hard.", answer: "study", explanation: "Modal diikuti bare infinitive." },
+            { id: 'u307', topicId: 'b2_t3', book: 2, type: 'text', question: "Lengkapi auxiliary Present Perfect: They ____ been waiting for two hours.", answer: "have", explanation: "Subjek jamak 'They' menggunakan have." },
+            { id: 'u308', topicId: 'b2_t3', book: 2, type: 'text', question: "Bentuk V-ing dari 'run' adalah ____.", answer: "running", explanation: "Penggandaan konsonan akhir n menjadi running." },
+            { id: 'u309', topicId: 'b2_t3', book: 2, type: 'text', question: "Lengkapi modal izin sopan: ____ I borrow your pen?", answer: "May", explanation: "'May' digunakan untuk permohonan izin formal/sopan." },
+            { id: 'u310', topicId: 'b2_t3', book: 2, type: 'text', question: "Koreksi 'He can plays piano' menjadi: He can ____ piano.", answer: "play", explanation: "Setelah modal tidak boleh ada akhiran -s." },
+
+            // Topic 4: Changing Sentence Focus (b2_t4)
+            { id: 'u401', topicId: 'b2_t4', book: 2, type: 'mc', question: "Apa perbedaan fokus utama antara kalimat Aktif dan Pasif?", options: ["Aktif memfokuskan objek, Pasif memfokuskan pelaku", "Aktif memfokuskan pelaku, Pasif memfokuskan penerima tindakan (objek)", "Tidak ada perbedaan makna atau fokus", "Pasif hanya untuk kalimat tanya"], answer: 1, explanation: "Kalimat pasif menempatkan penerima tindakan di posisi subjek untuk memberi penekanan." },
+            { id: 'u402', topicId: 'b2_t4', book: 2, type: 'mc', question: "Ubah kalimat aktif ke pasif: 'Shakespeare wrote Hamlet.'", options: ["Hamlet was written by Shakespeare.", "Hamlet is written by Shakespeare.", "Hamlet wrote by Shakespeare.", "Hamlet has been wrote by Shakespeare."], answer: 0, explanation: "Simple Past pasif: was/were + V3 (was written)." },
+            { id: 'u403', topicId: 'b2_t4', book: 2, type: 'mc', question: "Struktur 'It was John who broke the window' merupakan contoh kalimat:", options: ["Cleft sentence", "Passive sentence", "Compound sentence", "Imperative sentence"], answer: 0, explanation: "It-cleft sentence memecah klausa untuk memberi penekanan pada 'John'." },
+            { id: 'u404', topicId: 'b2_t4', book: 2, type: 'mc', question: "Kalimat pasif dari 'They are building a bridge' adalah:", options: ["A bridge is built by them.", "A bridge is being built by them.", "A bridge was built by them.", "A bridge has built."], answer: 1, explanation: "Continuous pasif: is/am/are + being + V3." },
+            { id: 'u405', topicId: 'b2_t4', book: 2, type: 'mc', question: "Struktur eksistensial 'There is a book on the table' berfungsi untuk:", options: ["Memperkenalkan informasi baru ke dalam wacana", "Menyatakan perintah tegas", "Menggantikan subjek pelaku", "Membuat kalimat tanya"], answer: 0, explanation: "There-structures memperkenalkan topik/informasi baru." },
+            { id: 'u406', topicId: 'b2_t4', book: 2, type: 'text', question: "Bentuk pasif dari 'He ate the cake' adalah: The cake was ____ by him.", answer: "eaten", explanation: "V3 dari eat adalah eaten." },
+            { id: 'u407', topicId: 'b2_t4', book: 2, type: 'text', question: "Lengkapi cleft penekanan: It was Mary ____ solved the problem. (who/which)", answer: "who", explanation: "Who merujuk orang pada relative pronoun." },
+            { id: 'u408', topicId: 'b2_t4', book: 2, type: 'text', question: "Lengkapi pasif modal: The door must be ____. (lock)", answer: "locked", explanation: "Passive modal: modal + be + V3." },
+            { id: 'u409', topicId: 'b2_t4', book: 2, type: 'text', question: "Pilih is/are untuk There-structure: There ____ many students here.", answer: "are", explanation: "Students adalah benda jamak, memerlukan 'are'." },
+            { id: 'u410', topicId: 'b2_t4', book: 2, type: 'text', question: "Preposisi penanda pelaku dalam kalimat pasif adalah: by ____.", answer: "by", explanation: "'by' menunjukkan agen pelaku tindakan." },
+
+            // Topic 5: Modifiers of the Verb (Adverbials) (b2_t5)
+            { id: 'u501', topicId: 'b2_t5', book: 2, type: 'mc', question: "Dalam kalimat 'She spoke with great confidence', frasa preposisi tersebut berfungsi sebagai:", options: ["Adverbial of manner", "Adjectival modifier", "Direct object", "Subject complement"], answer: 0, explanation: "'with great confidence' menjelaskan cara (manner) berbicara." },
+            { id: 'u502', topicId: 'b2_t5', book: 2, type: 'mc', question: "Klausa 'Although it was raining, we went hiking' diawali oleh adverbial of:", options: ["Time", "Concession / Kontras", "Place", "Manner"], answer: 1, explanation: "'Although' menyatakan konsesi atau kontras tak terduga." },
+            { id: 'u503', topicId: 'b2_t5', book: 2, type: 'mc', question: "Manakah yang merupakan Adverb of Frequency?", options: ["Always", "Silently", "Yesterday", "Everywhere"], answer: 0, explanation: "'Always' menyatakan tingkat keseringan aksi." },
+            { id: 'u504', topicId: 'b2_t5', book: 2, type: 'mc', question: "Di mana posisi baku adverb of frequency dalam kalimat dengan main verb biasa?", options: ["Tepat sebelum main verb", "Di akhir kalimat saja", "Sebelum subjek", "Di antara objek dan adverb"], answer: 0, explanation: "Posisi standar: Subjek + Adverb of frequency + Main verb (He always smiles)." },
+            { id: 'u505', topicId: 'b2_t5', book: 2, type: 'mc', question: "Klausa 'Because he was sick, he stayed home' menunjukkan adverbial of:", options: ["Reason / Sebab", "Condition", "Place", "Time"], answer: 0, explanation: "'Because' menerangkan alasan/sebab tindakan." },
+            { id: 'u506', topicId: 'b2_t5', book: 2, type: 'text', question: "Ubah 'patient' menjadi adverb of manner: He waited ____.", answer: "patiently", explanation: "Adverb berakhiran -ly." },
+            { id: 'u507', topicId: 'b2_t5', book: 2, type: 'text', question: "Lengkapi adverbial waktu: I saw him ____ morning. (tadi/this)", answer: "this", explanation: "'this morning' adalah keterangan waktu." },
+            { id: 'u508', topicId: 'b2_t5', book: 2, type: 'text', question: "Lengkapi konjungsi syarat: We will go ____ it doesn't rain. (jika)", answer: "if", explanation: "'if' memimpin adverbial clause of condition." },
+            { id: 'u509', topicId: 'b2_t5', book: 2, type: 'text', question: "Adverb of frequency untuk 'tidak pernah' adalah ____.", answer: "never", explanation: "Never berarti tidak pernah." },
+            { id: 'u510', topicId: 'b2_t5', book: 2, type: 'text', question: "Koreksi posisi adverb: 'He smiles always' menjadi: He ____ smiles.", answer: "always", explanation: "Adverb of frequency diletakkan sebelum verb biasa." },
+
+            // Topic 6: Modifiers of the Noun (Adjectivals) (b2_t6)
+            { id: 'u601', topicId: 'b2_t6', book: 2, type: 'mc', question: "Dalam 'The woman who lives next door is an artist', klausa penjelas wanita tersebut adalah:", options: ["Restrictive Relative Clause", "Non-restrictive Relative Clause", "Adverbial Clause", "Noun Clause"], answer: 0, explanation: "Relative clause tanpa koma mendefinisikan subjek secara spesifik (restrictive)." },
+            { id: 'u602', topicId: 'b2_t6', book: 2, type: 'mc', question: "Relative pronoun apa yang tepat untuk menerangkan kepemilikan benda/orang?", options: ["whose", "whom", "which", "who"], answer: 0, explanation: "'whose' menyatakan relasi kepemilikan (whose car was stolen)." },
+            { id: 'u603', topicId: 'b2_t6', book: 2, type: 'mc', question: "Frasa partisipial 'The boy crying in the corner' berasal dari reduksi:", options: ["The boy who was crying in the corner", "The boy who cried in corner", "The boy having cried", "The boy was cried"], answer: 0, explanation: "Present participle (-ing) mereduksi active relative clause." },
+            { id: 'u604', topicId: 'b2_t6', book: 2, type: 'mc', question: "Kapan kita menggunakan relative pronoun 'which'?", options: ["Untuk merujuk benda atau hewan", "Hanya untuk manusia", "Hanya untuk waktu", "Hanya untuk tempat"], answer: 0, explanation: "'which' merujuk objek mati atau binatang." },
+            { id: 'u605', topicId: 'b2_t6', book: 2, type: 'mc', question: "Dalam 'My father, who is 60 years old, retired', klausa tersebut diapit koma karena bersifat:", options: ["Non-restrictive (informasi tambahan)", "Restrictive", "Adverbial", "Imperative"], answer: 0, explanation: "Non-restrictive clauses memberikan info ekstra dan wajib diapit tanda koma." },
+            { id: 'u606', topicId: 'b2_t6', book: 2, type: 'text', question: "Lengkapi relative pronoun untuk orang: The man ____ called you is outside.", answer: "who", explanation: "Who merujuk subjek manusia." },
+            { id: 'u607', topicId: 'b2_t6', book: 2, type: 'text', question: "Lengkapi relative pronoun kepemilikan: A boy ____ bike was lost.", answer: "whose", explanation: "Whose menandakan kepemilikan sepeda anak tersebut." },
+            { id: 'u608', topicId: 'b2_t6', book: 2, type: 'text', question: "Lengkapi relative pronoun untuk tempat: The city ____ I was born.", answer: "where", explanation: "Where merujuk lokasi." },
+            { id: 'u609', topicId: 'b2_t6', book: 2, type: 'text', question: "Lengkapi relative pronoun benda: The book ____ is on the desk.", answer: "which", explanation: "Which merujuk benda mati." },
+            { id: 'u610', topicId: 'b2_t6', book: 2, type: 'text', question: "Participle pasif dari 'sell': Goods ____ at this market are cheap.", answer: "sold", explanation: "Past participle (sold) menerangkan barang yang dijual." },
+
+            // Topic 7: Nominals & Coordination (b2_t7)
+            { id: 'u701', topicId: 'b2_t7', book: 2, type: 'mc', question: "Dalam kalimat 'Swimming is my favorite hobby', kata 'Swimming' berposisi sebagai:", options: ["Gerund yang berfungsi sebagai Subjek", "Participle penjelas sifat", "Verb utama progresif", "Adverbial"], answer: 0, explanation: "Gerund adalah bentuk V-ing yang menduduki fungsi noun (subjek)." },
+            { id: 'u702', topicId: 'b2_t7', book: 2, type: 'mc', question: "Klausa 'That honesty is the best policy' dalam 'I believe that honesty is the best policy' berfungsi sebagai:", options: ["Noun clause sebagai Direct Object", "Adjective clause", "Adverbial clause", "Prepositional phrase"], answer: 0, explanation: "Klausa 'that...' menjadi objek langsung dari verb 'believe'." },
+            { id: 'u703', topicId: 'b2_t7', book: 2, type: 'mc', question: "Singkatan FANBOYS merujuk pada:", options: ["Coordinating Conjunctions", "Subordinating Conjunctions", "Relative Pronouns", "Correlative Conjunctions"], answer: 0, explanation: "For, And, Nor, But, Or, Yet, So adalah konjungsi koordinasi." },
+            { id: 'u704', topicId: 'b2_t7', book: 2, type: 'mc', question: "Pasangan correlative conjunction yang benar untuk 'neither' adalah:", options: ["nor", "or", "and", "but"], answer: 0, explanation: "Pasangan baku adalah 'neither ... nor ...'." },
+            { id: 'u705', topicId: 'b2_t7', book: 2, type: 'mc', question: "Dalam 'To learn English requires practice', frasa infinitif tersebut berfungsi sebagai:", options: ["Subject", "Direct Object", "Complement", "Adverbial"], answer: 0, explanation: "Infinitive phrase menempati slot subjek kalimat." },
+            { id: 'u706', topicId: 'b2_t7', book: 2, type: 'text', question: "Ubah kata kerja 'read' menjadi Gerund: ____ is fun.", answer: "Reading", explanation: "Gerund dibentuk dengan menambahkan akhiran -ing." },
+            { id: 'u707', topicId: 'b2_t7', book: 2, type: 'text', question: "Lengkapi pasangan correlative: Either John ____ Mary will come.", answer: "or", explanation: "Pasangan baku either adalah or." },
+            { id: 'u708', topicId: 'b2_t7', book: 2, type: 'text', question: "Lengkapi pasangan correlative: Not only smart ____ also kind.", answer: "but", explanation: "Pasangan baku: not only ... but also ... ." },
+            { id: 'u709', topicId: 'b2_t7', book: 2, type: 'text', question: "Konjungsi koordinasi untuk kontras: He is poor ____ honest.", answer: "but", explanation: "'but' menyatakan kontras sejajar." },
+            { id: 'u710', topicId: 'b2_t7', book: 2, type: 'text', question: "Bentuk infinitif dari 'go' adalah to ____.", answer: "go", explanation: "To infinitive: to + kata kerja dasar." }
+        ];
+
+        /* ========================================================
+           2. FLASHCARD DATA (50+ FLASHCARDS)
+        ======================================================== */
+        const flashcardData = [
+            // Book 1
+            { book: 1, topic: "Sentence Structure", front: "Apa dua unsur minimal wajib agar kalimat bahasa Inggris sah?", back: "Subject & Predicate", explanation: "Wajib memiliki pelaku (subjek) dan tindakan/kondisi (predikat)." },
+            { book: 1, topic: "Sentence Structure", front: "Apa nama kalimat yang berfungsi mengajukan pertanyaan?", back: "Interrogative Sentence", explanation: "Biasanya diawali auxiliary/to be/wh-word dan diakhiri tanda tanya." },
+            { book: 1, topic: "Sentence Structure", front: "Bagaimana struktur kalimat perintah (Imperative)?", back: "Langsung memakai Verb 1 tanpa subjek tersurat", explanation: "Contoh: 'Open the window!' ditujukan langsung ke lawan bicara." },
+            { book: 1, topic: "Sentence Structure", front: "Koreksi kalimat salah: 'She happy today.'", back: "She is happy today.", explanation: "Kalimat nominal memerlukan verb bantu to be 'is'." },
+            { book: 1, topic: "Parts of Speech", front: "Di manakah letak baku Adjective dalam frasa benda bahasa Inggris?", back: "SELALU di depan Noun", explanation: "Contoh: red car (bukan car red)." },
+            { book: 1, topic: "Parts of Speech", front: "Apa fungsi utama dari Adverb (Kata Keterangan)?", back: "Menerangkan verb, adjective, atau adverb lainnya", explanation: "Sering berakhiran -ly, contoh: quickly, beautifully." },
+            { book: 1, topic: "Parts of Speech", front: "Apa pronoun objek dari kata ganti subjek 'I'?", back: "Me", explanation: "Contoh: 'He sent me a gift.'" },
+            { book: 1, topic: "Tenses", front: "Tense apa yang digunakan untuk menyatakan fakta ilmiah & kebiasaan?", back: "Simple Present Tense", explanation: "Menggunakan V1 atau V-s/es untuk subjek He/She/It." },
+            { book: 1, topic: "Tenses", front: "Apa bentuk V2 dari irregular verb 'go'?", back: "Went", explanation: "V1: go, V2: went, V3: gone." },
+            { book: 1, topic: "Tenses", front: "Sebutkan rumus baku Present Perfect Tense.", back: "Subject + have/has + V3", explanation: "Menyatakan aksi masa lalu yang masih relevan dengan saat ini." },
+            { book: 1, topic: "Articles", front: "Kapan kita menggunakan indefinite article 'an'?", back: "Sebelum kata benda tunggal yang diawali BUNYI vokal", explanation: "Contoh: an apple, an hour (karena h silent)." },
+            { book: 1, topic: "Articles", front: "Mengapa kata 'university' memakai article 'a'?", back: "Karena diawali bunyi konsonan /juː/", explanation: "Penentuan a/an berdasarkan bunyi pelafalan, bukan huruf tertulis." },
+            { book: 1, topic: "Articles", front: "Kapan Definite Article 'the' digunakan?", back: "Saat bendanya unik atau sudah spesifik diketahui bersama", explanation: "Contoh: The sun, the president." },
+            { book: 1, topic: "Prepositions", front: "Preposisi apa yang dipakai untuk nama hari dan tanggal?", back: "On", explanation: "Contoh: on Monday, on August 17th." },
+            { book: 1, topic: "Prepositions", front: "Preposisi apa yang dipakai untuk jam atau waktu spesifik?", back: "At", explanation: "Contoh: at 7 AM, at midnight." },
+            { book: 1, topic: "Prepositions", front: "Preposisi apa yang dipakai untuk nama kota dan negara?", back: "In", explanation: "Contoh: in Jakarta, in Indonesia." },
+            { book: 1, topic: "Pronouns & Plurals", front: "Apa bentuk jamak tidak beraturan dari 'child'?", back: "Children", explanation: "Bukan childs, melainkan children." },
+            { book: 1, topic: "Pronouns & Plurals", front: "Apa bentuk jamak irregular dari 'foot'?", back: "Feet", explanation: "Bukan foots, melainkan feet." },
+            { book: 1, topic: "Pronouns & Plurals", front: "Bagaimana mengubah noun berakhiran -y (didahului konsonan) ke jamak?", back: "Ubah -y menjadi -ies", explanation: "Contoh: baby → babies, city → cities." },
+
+            // Book 2
+            { book: 2, topic: "Words & Phrases", front: "Apa yang dimaksud dengan Headword dalam Noun Phrase?", back: "Kata benda utama yang dimodifikasi oleh kata lain", explanation: "Dalam 'the tall glass building', kata 'building' adalah headword." },
+            { book: 2, topic: "Words & Phrases", front: "Apa fungsi dari Intensifier dalam frasa?", back: "Memperkuat/memodifikasi tingkat intensitas kata sifat/keterangan", explanation: "Contoh: extremely, very, exceptionally." },
+            { book: 2, topic: "Sentence Patterns", front: "Sebutkan 5 pola dasar kalimat bahasa Inggris dalam sintaksis.", back: "SV, SVO, SVC, SVOO, SVOC", explanation: "Pola dasar penataan klausa utama bahasa Inggris." },
+            { book: 2, topic: "Sentence Patterns", front: "Apa perbedaan pola SVC dan SVO?", back: "SVC memakai Linking Verb + Complement; SVO memakai Action Verb + Object", explanation: "He is happy (SVC) vs He kicked the ball (SVO)." },
+            { book: 2, topic: "Sentence Patterns", front: "Dalam kalimat 'She made him angry', apa fungsi sintaksis 'angry'?", back: "Object Complement", explanation: "'angry' menerangkan kondisi objek 'him'." },
+            { book: 2, topic: "Expanding Main Verb", front: "Apa saja bentuk auxiliary verbs utama?", back: "be, have, do", explanation: "be (continuous), have (perfect), do (negasi/pertanyaan)." },
+            { book: 2, topic: "Expanding Main Verb", front: "Aturan kata kerja setelah Modal Auxiliary adalah:", back: "Wajib Bare Infinitive (kata kerja dasar tanpa to)", explanation: "Contoh: He must go (bukan must goes / must to go)." },
+            { book: 2, topic: "Changing Focus", front: "Bagaimana rumus umum pembentukan Passive Voice?", back: "be + V3 (Past Participle)", explanation: "Contoh: The letter was sent by him." },
+            { book: 2, topic: "Changing Focus", front: "Apa yang dimaksud dengan It-Cleft Sentence?", back: "Pemisahan kalimat menggunakan 'It is/was ... that/who ...'", explanation: "Untuk memfokuskan elemen tertentu, misal: It was John who won." },
+            { book: 2, topic: "Modifiers of Verb", front: "Apa yang dijelaskan oleh Adverbial of Manner?", back: "Cara bagaimana suatu aksi dilakukan", explanation: "Contoh: She solved the puzzle quickly." },
+            { book: 2, topic: "Modifiers of Noun", front: "Apa fungsi Restrictive Relative Clause?", back: "Mendefinisikan noun secara esensial tanpa tanda koma", explanation: "Contoh: The student who cheated was disqualified." },
+            { book: 2, topic: "Modifiers of Noun", front: "Relative pronoun apa yang digunakan untuk kepemilikan?", back: "Whose", explanation: "Contoh: The author whose book was published." },
+            { book: 2, topic: "Nominals", front: "Apa definisi dari Gerund?", back: "Kata kerja berakhiran -ing yang berfungsi sebagai Noun", explanation: "Contoh: Swimming is good for health." },
+            { book: 2, topic: "Nominals", front: "Sebutkan 7 Coordinating Conjunctions (FANBOYS)!", back: "For, And, Nor, But, Or, Yet, So", explanation: "Menghubungkan kata, frasa, atau klausa yang setara." }
+        ];
+
+        /* ========================================================
+           3. APPLICATION STATE
+        ======================================================== */
+        let currentBook = 1;
+        let activeTab = 'dashboard';
+        let userStats = {
+            streak: 1,
+            lastLoginDate: new Date().toDateString(),
+            totalDone: 0,
+            topicProgress: {}
+        };
+
+        // Quiz State
+        let activeQuizQuestions = [];
+        let currentQuizIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let wrongQuestionsQueue = [];
+        let currentActiveTopicId = null;
+
+        // Flashcard State
+        let activeFlashcards = [];
+        let currentFCIndex = 0;
+        let fcMasteredCount = 0;
+        let fcReviewCount = 0;
+        let isCardFlipped = false;
+        let currentFCFilter = 'all';
+
+        /* ========================================================
+           4. INITIALIZATION & STORAGE
+        ======================================================== */
+        window.onload = function() {
+            loadUserData();
+            checkDarkModeInit();
+        };
+
+        function loadUserData() {
+            const saved = localStorage.getItem('english_grammar_pro_stats');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    userStats = { ...userStats, ...parsed };
+                } catch(e) { console.error(e); }
+            }
+            checkStreak();
+            updateDashboardUI();
+        }
+
+        function saveUserData() {
+            localStorage.setItem('english_grammar_pro_stats', JSON.stringify(userStats));
+        }
+
+        function checkStreak() {
+            const today = new Date().toDateString();
+            if (!userStats.lastLoginDate) {
+                userStats.lastLoginDate = today;
+                userStats.streak = 1;
+            } else if (userStats.lastLoginDate !== today) {
+                const prev = new Date(userStats.lastLoginDate);
+                const curr = new Date(today);
+                const diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
+                if (diffDays === 1) {
+                    userStats.streak++;
+                } else if (diffDays > 1) {
+                    userStats.streak = 1;
+                }
+                userStats.lastLoginDate = today;
+            }
+            saveUserData();
+            const hBadge = document.getElementById('header-streak-count');
+            if (hBadge) hBadge.innerText = userStats.streak;
+        }
+
+        function checkDarkModeInit() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('dark-icon').className = 'fa-solid fa-sun text-base';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('dark-icon').className = 'fa-solid fa-moon text-base';
+            }
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('dark-icon').className = 'fa-solid fa-moon text-base';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('dark-icon').className = 'fa-solid fa-sun text-base';
+            }
+        }
+
+        /* ========================================================
+           5. NAVIGATION & TAB SWITCHING
+        ======================================================== */
+        function selectBook(bookNum) {
+            currentBook = bookNum;
+            document.getElementById('view-home').classList.add('hidden');
+            const ws = document.getElementById('view-workspace');
+            ws.classList.remove('hidden');
+            ws.classList.add('flex');
+
+            const titleEl = document.getElementById('app-title');
+            const subEl = document.getElementById('app-subtitle');
+            const badgeEl = document.getElementById('active-book-badge');
+
+            if (bookNum === 1) {
+                titleEl.innerText = "A Brief English Grammar";
+                subEl.innerText = "Modul Buku 1 (6 Topik Dasar)";
+                badgeEl.innerText = "📗 Buku 1";
+                badgeEl.className = "text-xs font-bold px-2.5 py-1.5 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 shrink-0";
+                document.getElementById('materi-container-book1').classList.remove('hidden');
+                document.getElementById('materi-container-book2').classList.add('hidden');
+            } else {
+                titleEl.innerText = "Understanding English Grammar";
+                subEl.innerText = "Modul Buku 2 (7 Topik Lanjutan)";
+                badgeEl.innerText = "📘 Buku 2";
+                badgeEl.className = "text-xs font-bold px-2.5 py-1.5 rounded-xl bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 shrink-0";
+                document.getElementById('materi-container-book1').classList.add('hidden');
+                document.getElementById('materi-container-book2').classList.remove('hidden');
+            }
+
+            renderLatihanTopics();
+            switchTab('dashboard');
+        }
+
+        function goHome() {
+            const ws = document.getElementById('view-workspace');
+            ws.classList.add('hidden');
+            ws.classList.remove('flex');
+            document.getElementById('view-home').classList.remove('hidden');
+            document.getElementById('app-title').innerText = "English Grammar Pro";
+            document.getElementById('app-subtitle').innerText = "Pilih Modul Pembelajaran";
+            quitQuiz();
+        }
+
+        function switchTab(tabName) {
+            activeTab = tabName;
+            ['dashboard', 'latihan', 'materi', 'flashcard'].forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                const content = document.getElementById(`tab-content-${t}`);
+                if (!btn || !content) return;
+                if (t === tabName) {
+                    btn.className = "min-h-[44px] px-4 py-2.5 text-xs font-bold rounded-xl transition whitespace-nowrap bg-brand-600 text-white shadow-sm flex items-center";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "min-h-[44px] px-4 py-2.5 text-xs font-bold rounded-xl transition whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center";
+                    content.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'dashboard') updateDashboardUI();
+            else if (tabName === 'flashcard') initFlashcards(currentBook === 1 ? 'book1' : 'book2');
+        }
+
+        /* ========================================================
+           6. DASHBOARD
+        ======================================================== */
+        function updateDashboardUI() {
+            document.getElementById('stat-streak').innerText = `${userStats.streak} Hari`;
+            document.getElementById('stat-total-done').innerText = userStats.totalDone;
+
+            const activePool = currentBook === 1 ? topicsList1 : topicsList2;
+            let totalAcc = 0, countDone = 0;
+            let lowestAvg = 100, weakestName = null;
+
+            const container = document.getElementById('topic-stats-container');
+            container.innerHTML = '';
+
+            activePool.forEach(top => {
+                const prog = userStats.topicProgress[top.id] || { correct: 0, total: 0, accuracy: 0 };
+                if (prog.total > 0) {
+                    totalAcc += prog.accuracy;
+                    countDone++;
+                    if (prog.accuracy < lowestAvg) {
+                        lowestAvg = prog.accuracy;
+                        weakestName = top.name;
+                    }
+                }
+
+                let colorBar = prog.accuracy >= 80 ? 'bg-emerald-500' : (prog.accuracy >= 50 ? 'bg-amber-500' : 'bg-rose-500');
+                if (prog.total === 0) colorBar = 'bg-slate-300 dark:bg-slate-600';
+
+                container.innerHTML += `
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-700 dark:text-slate-200">${top.name}</span>
+                            <span class="${prog.total === 0 ? 'text-slate-400' : 'text-slate-800 dark:text-slate-100 font-bold'}">${prog.total === 0 ? 'Belum dicoba' : `${prog.accuracy}% (${prog.correct}/${prog.total})`}</span>
+                        </div>
+                        <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                            <div class="${colorBar} h-full rounded-full transition-all duration-300" style="width: ${prog.total === 0 ? 0 : prog.accuracy}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const avgAcc = countDone > 0 ? Math.round(totalAcc / countDone) : 0;
+            document.getElementById('stat-avg-accuracy').innerText = `${avgAcc}%`;
+
+            const weakAlert = document.getElementById('weakest-topic-alert');
+            const weakText = document.getElementById('weakest-topic-text');
+            if (weakestName && lowestAvg < 70) {
+                weakAlert.classList.remove('hidden');
+                weakText.innerHTML = `Topik <strong>${weakestName}</strong> memiliki akurasi terendah (<strong>${lowestAvg}%</strong>). Lakukan latihan ulang untuk memperkuat penguasaanmu!`;
+            } else {
+                weakAlert.classList.add('hidden');
+            }
+        }
+
+        /* ========================================================
+           7. LATIHAN & QUIZ ENGINE
+        ======================================================== */
+        function renderLatihanTopics() {
+            const container = document.getElementById('topic-list-container');
+            container.innerHTML = '';
+            const topics = currentBook === 1 ? topicsList1 : topicsList2;
+
+            topics.forEach(t => {
+                container.innerHTML += `
+                    <div onclick="startQuiz('${t.id}', '${t.name}')" class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-brand-500 dark:hover:border-brand-400 transition cursor-pointer flex justify-between items-center group">
+                        <div class="flex items-center gap-3 min-w-0 pr-2">
+                            <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center ${t.color} shrink-0 group-hover:scale-105 transition-transform">
+                                <i class="fa-solid ${t.icon}"></i>
+                            </div>
+                            <div class="space-y-0.5 min-w-0">
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition truncate">${t.name}</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 truncate">${t.desc}</p>
+                            </div>
+                        </div>
+                        <button class="bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 text-xs font-bold px-3.5 py-2 rounded-xl group-hover:bg-brand-600 group-hover:text-white transition shrink-0 min-h-[44px]">
+                            Mulai →
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function startQuiz(topicId, topicName) {
+            checkStreak();
+            currentActiveTopicId = topicId;
+            wrongQuestionsQueue = [];
+            const pool = currentBook === 1 ? bankSoalBook1 : bankSoalBook2;
+            const filtered = pool.filter(q => q.topicId === topicId);
+
+            activeQuizQuestions = [...filtered].sort(() => Math.random() - 0.5).slice(0, 10);
+
+            if (activeQuizQuestions.length === 0) {
+                alert("Soal untuk topik ini belum tersedia.");
+                return;
+            }
+
+            currentQuizIndex = 0;
+            correctCount = 0;
+            wrongCount = 0;
+
+            document.getElementById('latihan-menu').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-topic-title').innerText = topicName;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if (currentQuizIndex >= activeQuizQuestions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const q = activeQuizQuestions[currentQuizIndex];
+            document.getElementById('quiz-question-counter').innerText = `Soal ${currentQuizIndex + 1} dari ${activeQuizQuestions.length}`;
+            document.getElementById('quiz-question-text').innerText = q.question;
+
+            const progPercent = ((currentQuizIndex + 1) / activeQuizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progPercent}%`;
+
+            document.getElementById('quiz-feedback-box').classList.add('hidden');
+            const optContainer = document.getElementById('quiz-options-container');
+            const inputContainer = document.getElementById('quiz-input-container');
+
+            if (q.type === 'mc') {
+                optContainer.classList.remove('hidden');
+                inputContainer.classList.add('hidden');
+                optContainer.innerHTML = '';
+                q.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-brand-500 dark:hover:border-brand-400 font-medium text-sm transition flex items-center justify-between min-h-[44px]";
+                    btn.innerHTML = `<span class="pr-2">${opt}</span> <span class="w-6 h-6 rounded-full border border-slate-300 dark:border-slate-600 flex items-center justify-center text-xs text-slate-400 shrink-0 font-bold">${String.fromCharCode(65 + idx)}</span>`;
+                    btn.onclick = () => selectOption(idx);
+                    optContainer.appendChild(btn);
+                });
+            } else {
+                optContainer.classList.add('hidden');
+                inputContainer.classList.remove('hidden');
+                const field = document.getElementById('quiz-text-answer');
+                field.value = '';
+                field.disabled = false;
+                document.getElementById('quiz-input-error').classList.add('hidden');
+                setTimeout(() => field.focus(), 50);
+            }
+        }
+
+        function selectOption(idx) {
+            const q = activeQuizQuestions[currentQuizIndex];
+            const buttons = document.getElementById('quiz-options-container').children;
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (i === q.answer) {
+                    buttons[i].className = "w-full text-left p-4 rounded-xl border border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 font-bold text-sm text-emerald-900 dark:text-emerald-200 flex items-center justify-between min-h-[44px]";
+                } else if (i === idx && idx !== q.answer) {
+                    buttons[i].className = "w-full text-left p-4 rounded-xl border border-rose-500 bg-rose-50 dark:bg-rose-950/40 font-medium text-sm text-rose-900 dark:text-rose-200 flex items-center justify-between min-h-[44px]";
+                }
+            }
+
+            const isCorrect = (idx === q.answer);
+            if (isCorrect) {
+                correctCount++;
+            } else {
+                wrongCount++;
+                wrongQuestionsQueue.push(q);
+            }
+            showFeedback(isCorrect, q.explanation);
+        }
+
+        function submitTextAnswer() {
+            const field = document.getElementById('quiz-text-answer');
+            const inputVal = field.value.trim();
+            const errorEl = document.getElementById('quiz-input-error');
+
+            if (!inputVal) {
+                errorEl.innerText = "Ketik jawabanmu terlebih dahulu.";
+                errorEl.classList.remove('hidden');
+                field.classList.add('animate-shake', 'border-rose-500');
+                setTimeout(() => field.classList.remove('animate-shake'), 300);
+                return;
+            }
+
+            field.disabled = true;
+            const q = activeQuizQuestions[currentQuizIndex];
+            const cleanUser = inputVal.toLowerCase().replace(/[.,!?;:]/g, '').trim();
+            const cleanAns = q.answer.toLowerCase().replace(/[.,!?;:]/g, '').trim();
+            const isCorrect = cleanUser === cleanAns;
+
+            if (isCorrect) {
+                correctCount++;
+            } else {
+                wrongCount++;
+                wrongQuestionsQueue.push(q);
+            }
+
+            showFeedback(isCorrect, `Kunci Jawaban: "${q.answer}". ${q.explanation}`);
+        }
+
+        function handleTextKey(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                submitTextAnswer();
+            }
+        }
+
+        function clearTextError() {
+            document.getElementById('quiz-input-error').classList.add('hidden');
+            document.getElementById('quiz-text-answer').classList.remove('border-rose-500');
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const box = document.getElementById('quiz-feedback-box');
+            const header = document.getElementById('quiz-feedback-header');
+            const exp = document.getElementById('quiz-feedback-explanation');
+
+            box.classList.remove('hidden');
+            if (isCorrect) {
+                box.className = "rounded-2xl p-4 md:p-5 space-y-3 border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/40";
+                header.className = "font-bold text-sm flex items-center gap-2 text-emerald-800 dark:text-emerald-300";
+                header.innerHTML = `<i class="fa-solid fa-circle-check text-lg text-emerald-600"></i> Jawaban Benar!`;
+            } else {
+                box.className = "rounded-2xl p-4 md:p-5 space-y-3 border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40";
+                header.className = "font-bold text-sm flex items-center gap-2 text-rose-800 dark:text-rose-300";
+                header.innerHTML = `<i class="fa-solid fa-circle-xmark text-lg text-rose-600"></i> Kurang Tepat`;
+            }
+            exp.innerText = explanation;
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            renderQuestion();
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.remove('hidden');
+
+            const total = activeQuizQuestions.length;
+            const score = Math.round((correctCount / total) * 100);
+
+            document.getElementById('result-score').innerText = `${score}%`;
+            document.getElementById('result-correct').innerText = correctCount;
+            document.getElementById('result-wrong').innerText = wrongCount;
+
+            const emoji = document.getElementById('result-emoji');
+            if (score >= 80) emoji.className = "fa-solid fa-trophy text-amber-500";
+            else if (score >= 50) emoji.className = "fa-solid fa-medal text-brand-500";
+            else emoji.className = "fa-solid fa-book-open text-rose-500";
+
+            userStats.totalDone += total;
+            if (currentActiveTopicId && currentActiveTopicId !== 'mixed_exam') {
+                if (!userStats.topicProgress[currentActiveTopicId]) {
+                    userStats.topicProgress[currentActiveTopicId] = { correct: 0, total: 0, accuracy: 0 };
+                }
+                const tp = userStats.topicProgress[currentActiveTopicId];
+                tp.correct += correctCount;
+                tp.total += total;
+                tp.accuracy = Math.round((tp.correct / tp.total) * 100);
+            }
+            saveUserData();
+
+            const retryBtn = document.getElementById('btn-retry-wrong');
+            if (wrongQuestionsQueue.length > 0) {
+                retryBtn.classList.remove('hidden');
+            } else {
+                retryBtn.classList.add('hidden');
+            }
+        }
+
+        function retryWrongAnswers() {
+            if (wrongQuestionsQueue.length === 0) return;
+            activeQuizQuestions = [...wrongQuestionsQueue];
+            wrongQuestionsQueue = [];
+            currentQuizIndex = 0;
+            correctCount = 0;
+            wrongCount = 0;
+
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function returnToLatihanMenu() { quitQuiz(); }
+        function quitQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('latihan-menu').classList.remove('hidden');
+            updateDashboardUI();
+        }
+
+        /* ========================================================
+           8. MATERI SECTIONS
+        ======================================================== */
+        function showMateriSection(sectionId, btn) {
+            document.querySelectorAll('.materi-section-b1').forEach(s => s.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            document.querySelectorAll('.materi-tab-b1').forEach(t => {
+                t.className = "materi-tab-b1 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap";
+            });
+            btn.className = "materi-tab-b1 min-h-[44px] bg-brand-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap shadow-sm";
+        }
+
+        function showMateriSectionB2(sectionId, btn) {
+            document.querySelectorAll('.materi-section-b2').forEach(s => s.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            document.querySelectorAll('.materi-tab-b2').forEach(t => {
+                t.className = "materi-tab-b2 min-h-[44px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap";
+            });
+            btn.className = "materi-tab-b2 min-h-[44px] bg-brand-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap shadow-sm";
+        }
+
+        /* ========================================================
+           9. FLASHCARD ENGINE
+        ======================================================== */
+        function initFlashcards(filter = 'all') {
+            currentFCFilter = filter;
+            if (filter === 'all') activeFlashcards = [...flashcardData];
+            else if (filter === 'book1') activeFlashcards = flashcardData.filter(f => f.book === 1);
+            else activeFlashcards = flashcardData.filter(f => f.book === 2);
+
+            activeFlashcards.sort(() => Math.random() - 0.5);
+            currentFCIndex = 0;
+            fcMasteredCount = 0;
+            fcReviewCount = 0;
+            isCardFlipped = false;
+
+            // Update filter buttons
+            const bAll = document.getElementById('fc-filter-all');
+            const bB1 = document.getElementById('fc-filter-b1');
+            const bB2 = document.getElementById('fc-filter-b2');
+            if (bAll) bAll.className = filter === 'all' ? "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition" : "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition";
+            if (bB1) bB1.className = filter === 'book1' ? "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition" : "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition";
+            if (bB2) bB2.className = filter === 'book2' ? "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition" : "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition";
+
+            document.getElementById('flashcard-card-container').classList.remove('hidden');
+            document.getElementById('flashcard-result-container').classList.add('hidden');
+            renderFlashcard();
+        }
+
+        function filterFlashcards(type) { initFlashcards(type); }
+
+        function renderFlashcard() {
+            if (currentFCIndex >= activeFlashcards.length) {
+                finishFlashcards();
+                return;
+            }
+
+            const card = activeFlashcards[currentFCIndex];
+            isCardFlipped = false;
+            const inner = document.getElementById('flashcard-inner');
+            inner.classList.remove('rotate-y-180');
+
+            document.getElementById('fc-topic-label').innerText = `Buku ${card.book} • ${card.topic}`;
+            document.getElementById('fc-question').innerText = card.front;
+            document.getElementById('fc-answer').innerText = card.back;
+            document.getElementById('fc-explanation').innerText = card.explanation;
+
+            document.getElementById('fc-counter-info').innerText = `Kartu ${currentFCIndex + 1} dari ${activeFlashcards.length}`;
+            document.getElementById('fc-stats-badge').innerText = `Hafal: ${fcMasteredCount} | Belum: ${fcReviewCount}`;
+        }
+
+        function flipCard() {
+            const inner = document.getElementById('flashcard-inner');
+            isCardFlipped = !isCardFlipped;
+            if (isCardFlipped) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function markFlashcard(isMastered) {
+            if (isMastered) {
+                fcMasteredCount++;
+            } else {
+                fcReviewCount++;
+                activeFlashcards.push(activeFlashcards[currentFCIndex]);
+            }
+            currentFCIndex++;
+            renderFlashcard();
+        }
+
+        function nextFlashcard() {
+            currentFCIndex++;
+            renderFlashcard();
+        }
+
+        function prevFlashcard() {
+            if (currentFCIndex > 0) {
+                currentFCIndex--;
+                renderFlashcard();
+            }
+        }
+
+        function finishFlashcards() {
+            document.getElementById('flashcard-card-container').classList.add('hidden');
+            document.getElementById('flashcard-result-container').classList.remove('hidden');
+
+            document.getElementById('fc-res-mastered').innerText = fcMasteredCount;
+            document.getElementById('fc-res-review').innerText = fcReviewCount;
+        }
+
+        function restartFlashcards() { initFlashcards(currentFCFilter); }
+
+        /* ========================================================
+           10. COMBINED MODE & MIXED EXAM
+        ======================================================== */
+        function openCombinedMode() {
+            document.getElementById('modal-combined').classList.remove('hidden');
+            renderCombinedTopics('all');
+        }
+
+        function closeCombinedMode() {
+            document.getElementById('modal-combined').classList.add('hidden');
+        }
+
+        function filterCombinedTopics(type) {
+            ['all', 'b1', 'b2'].forEach(k => {
+                const btn = document.getElementById(`cmb-filter-${k}`);
+                if (!btn) return;
+                const match = (k === 'all' && type === 'all') || (k === 'b1' && type === 'book1') || (k === 'b2' && type === 'book2');
+                btn.className = match ? "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition" : "min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition";
+            });
+            renderCombinedTopics(type);
+        }
+
+        function renderCombinedTopics(type) {
+            const listContainer = document.getElementById('combined-topics-list');
+            listContainer.innerHTML = '';
+            let topics = [];
+            if (type === 'all' || type === 'book1') {
+                topicsList1.forEach(t => topics.push({ book: 1, name: t.name, badge: "📗 Buku 1" }));
+            }
+            if (type === 'all' || type === 'book2') {
+                topicsList2.forEach(t => topics.push({ book: 2, name: t.name, badge: "📘 Buku 2" }));
+            }
+
+            topics.forEach(tp => {
+                listContainer.innerHTML += `
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs gap-2">
+                        <div class="flex items-center gap-2 truncate">
+                            <span class="font-bold shrink-0">${tp.badge}</span>
+                            <span class="text-slate-700 dark:text-slate-300 truncate">${tp.name}</span>
+                        </div>
+                        <button onclick="jumpToBookTopic(${tp.book})" class="text-brand-600 dark:text-brand-400 font-bold hover:underline shrink-0 min-h-[44px] px-2 flex items-center">
+                            Baca →
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function jumpToBookTopic(bookNum) {
+            closeCombinedMode();
+            selectBook(bookNum);
+            switchTab('materi');
+        }
+
+        function startMixedExam() {
+            closeCombinedMode();
+            checkStreak();
+            const combinedPool = [...bankSoalBook1, ...bankSoalBook2];
+            activeQuizQuestions = [...combinedPool].sort(() => Math.random() - 0.5).slice(0, 20);
+
+            currentQuizIndex = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            currentActiveTopicId = "mixed_exam";
+
+            document.getElementById('view-home').classList.add('hidden');
+            const ws = document.getElementById('view-workspace');
+            ws.classList.remove('hidden');
+            ws.classList.add('flex');
+            switchTab('latihan');
+
+            document.getElementById('latihan-menu').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-topic-title').innerText = "🚀 Ujian Campuran (Buku 1 & Buku 2)";
+            renderQuestion();
+        }
+    </script>
+</body>
+</html>
