@@ -613,9 +613,11 @@
                 <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Sistem akan mengambil 20 soal secara acak dari total bank soal keempat modul yang tersedia.</p>
                 
                 <div class="flex gap-2 pb-2 overflow-x-auto no-scrollbar">
-                    <button onclick="filterCombinedTopics('all')" id="cmb-filter-all" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white">Semua Modul</button>
-                    <button onclick="filterCombinedTopics('b3')" id="cmb-filter-b3" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Modul 3 (📙)</button>
-                    <button onclick="filterCombinedTopics('b4')" id="cmb-filter-b4" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Modul 4 (📕)</button>
+                    <button onclick="filterCombinedTopics('all')" id="cmb-filter-all" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shrink-0">Semua Modul</button>
+                    <button onclick="filterCombinedTopics('b1')" id="cmb-filter-b1" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">📗 Buku 1</button>
+                    <button onclick="filterCombinedTopics('b2')" id="cmb-filter-b2" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">📘 Buku 2</button>
+                    <button onclick="filterCombinedTopics('b3')" id="cmb-filter-b3" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">📙 Buku 3</button>
+                    <button onclick="filterCombinedTopics('b4')" id="cmb-filter-b4" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0">📕 Buku 4</button>
                 </div>
 
                 <div id="combined-topics-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
@@ -1226,17 +1228,43 @@
         function filterCombinedTopics(type) { renderCombinedTopics(type); }
 
         function renderCombinedTopics(type) {
+            // Update filter button styling
+            const filterTypes = ['all', 'b1', 'b2', 'b3', 'b4'];
+            filterTypes.forEach(t => {
+                const btn = document.getElementById(`cmb-filter-${t}`);
+                if (btn) {
+                    if (t === type) {
+                        btn.className = "min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shrink-0";
+                    } else {
+                        btn.className = "min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0";
+                    }
+                }
+            });
+
             const listContainer = document.getElementById('combined-topics-list');
             listContainer.innerHTML = '';
             let topics = [];
 
+            if (type === 'all' || type === 'b1') {
+                topics.push({book: 1, name: "Sentence Structure", badge: "📗 Buku 1"});
+                topics.push({book: 1, name: "Parts of Speech", badge: "📗 Buku 1"});
+                topics.push({book: 1, name: "Tenses Dasar", badge: "📗 Buku 1"});
+            }
+            if (type === 'all' || type === 'b2') {
+                topics.push({book: 2, name: "Words and Phrases", badge: "📘 Buku 2"});
+                topics.push({book: 2, name: "Sentence Patterns (SV, SVO, SVC)", badge: "📘 Buku 2"});
+            }
             if (type === 'all' || type === 'b3') {
                 topics.push({book: 3, name: "Modal Auxiliary Verbs", badge: "📙 Buku 3"});
                 topics.push({book: 3, name: "WH-Questions (5W1H)", badge: "📙 Buku 3"});
                 topics.push({book: 3, name: "Linking Verbs", badge: "📙 Buku 3"});
+                topics.push({book: 3, name: "Conjunctions (FANBOYS)", badge: "📙 Buku 3"});
+                topics.push({book: 3, name: "Articles (A, An, The)", badge: "📙 Buku 3"});
             }
             if (type === 'all' || type === 'b4') {
                 topics.push({book: 4, name: "Present Continuous vs Simple", badge: "📕 Buku 4"});
+                topics.push({book: 4, name: "Present Perfect Continuous", badge: "📕 Buku 4"});
+                topics.push({book: 4, name: "Must, Can't & Needn't", badge: "📕 Buku 4"});
                 topics.push({book: 4, name: "Conditionals & Wish", badge: "📕 Buku 4"});
                 topics.push({book: 4, name: "Passive Voice", badge: "📕 Buku 4"});
             }
@@ -1246,7 +1274,7 @@
                     <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 flex justify-between items-center text-xs gap-2">
                         <div class="flex items-center gap-2 truncate">
                             <span class="font-bold shrink-0">${tp.badge}</span>
-                            <span class="text-slate-700 dark:text-slate-300 truncate">${tp.name}</span>
+                            <span class="text-slate-700 dark:text-slate-300 truncate font-medium">${tp.name}</span>
                         </div>
                         <button onclick="jumpToBookTopic(${tp.book})" class="text-brand-600 dark:text-brand-400 font-bold hover:underline shrink-0 min-h-[44px] px-2 flex items-center">
                             Baca →
