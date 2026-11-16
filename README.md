@@ -4,12 +4,13 @@ Aplikasi web interaktif pembelajaran Tata Bahasa Inggris (*English Grammar*) yan
 
 ## ✨ Fitur Utama
 
-- **Pilihan 4 Modul Pembelajaran:**
+- **Pilihan 5 Modul Pembelajaran Lengkap:**
   - 📗 **Modul 1: A Brief English Grammar** (Pondasi utama penyusunan kalimat dasar, kelas kata *parts of speech*, dan aturan perubahannya).
   - 📘 **Modul 2: Understanding English Grammar** (Struktur frasa dan 5 pola dasar pembentuk kalimat: *SV, SVO, SVC, SVOO, SVOC*).
   - 📙 **Modul 3: Your Basic Grammar (Mujahidah & Ahmed Sardi)** (Kata bantu modal, formulasi pertanyaan 5W1H, linking verbs, konjungsi FANBOYS, dan artikel).
   - 📕 **Modul 4: English Grammar in Use (Raymond Murphy - Cambridge 5th Ed)** (Present continuous vs simple, present perfect continuous, modals of necessity, conditionals tipe 2 & 3, serta passive voice).
-  - 🚀 **Mode Ujian Campuran All-in-One**: Simulasi kuis acak 20 soal gabungan dari keempat buku referensi.
+  - 🎯 **Modul 5: IELTS Vocabulary & Synonym-Antonym Booster** (Peningkatan band skor IELTS Writing & Speaking: Tangga Kosakata CEFR bertingkat *A2 ➔ B1/B2 ➔ C1/C2* misal *eat ➔ consume ➔ devour/partake*, antonim komprehensif, 100 sinonim bacaan *IELTS Reading*, 208 kosakata akademik lanjutan lengkap dengan pengucapan audio *TTS*, dan phrasal verbs esensial).
+  - 🚀 **Mode Ujian Campuran All-in-One**: Simulasi kuis acak 20 soal gabungan dari kelima modul referensi.
 - **Latihan Soal Interaktif:**
   - Soal pilihan ganda (*Multiple Choice*) dengan umpan balik instan dan pembahasan lengkap.
   - Soal isian (*Text Answer*) dengan tombol submit dan validasi responsif.
